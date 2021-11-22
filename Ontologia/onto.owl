@@ -1,0 +1,185 @@
+<?xml version="1.0"?>
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     ontologyIRI="http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology">
+    <Prefix name="" IRI="http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Declaration>
+        <Class IRI="#Biparental"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#CentreSalud"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Escolas"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Familia"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Grup_estudiants"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Hipermercats"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Individual"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Localitat"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Monoparental"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Oci"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Parella_fills_proxim"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Parella_sense_fills"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Pis"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Servei"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Solicitant"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#SuperMercats"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#TransportPublic"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Vivenda"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ZonasVerdes"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#duplex"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#unifamiliar"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="#Biparental"/>
+        <Class IRI="#Familia"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#CentreSalud"/>
+        <Class IRI="#Servei"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Escolas"/>
+        <Class IRI="#Servei"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Familia"/>
+        <Class IRI="#Solicitant"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Grup_estudiants"/>
+        <Class IRI="#Solicitant"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Hipermercats"/>
+        <Class IRI="#SuperMercats"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Individual"/>
+        <Class IRI="#Solicitant"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Monoparental"/>
+        <Class IRI="#Familia"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Oci"/>
+        <Class IRI="#Servei"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Parella_fills_proxim"/>
+        <Class IRI="#Solicitant"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Parella_sense_fills"/>
+        <Class IRI="#Solicitant"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Pis"/>
+        <Class IRI="#Vivenda"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Servei"/>
+        <Class IRI="#Localitat"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#SuperMercats"/>
+        <Class IRI="#Servei"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#TransportPublic"/>
+        <Class IRI="#Servei"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Vivenda"/>
+        <Class IRI="#Localitat"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ZonasVerdes"/>
+        <Class IRI="#Servei"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#duplex"/>
+        <Class IRI="#Vivenda"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#unifamiliar"/>
+        <Class IRI="#Vivenda"/>
+    </SubClassOf>
+    <DisjointClasses>
+        <Class IRI="#Biparental"/>
+        <Class IRI="#Monoparental"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#CentreSalud"/>
+        <Class IRI="#Escolas"/>
+        <Class IRI="#Hipermercats"/>
+        <Class IRI="#Oci"/>
+        <Class IRI="#SuperMercats"/>
+        <Class IRI="#TransportPublic"/>
+        <Class IRI="#ZonasVerdes"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#Familia"/>
+        <Class IRI="#Grup_estudiants"/>
+        <Class IRI="#Individual"/>
+        <Class IRI="#Parella_fills_proxim"/>
+        <Class IRI="#Parella_sense_fills"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#Localitat"/>
+        <Class IRI="#Servei"/>
+        <Class IRI="#Solicitant"/>
+        <Class IRI="#Vivenda"/>
+    </DisjointClasses>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+
