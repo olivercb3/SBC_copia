@@ -9,227 +9,309 @@
 <http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology> rdf:type owl:Ontology .
 
 #################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#a_carrec_de
+:a_carrec_de rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf owl:topObjectProperty ;
+             rdfs:domain :Familia ;
+             rdfs:range :Dependent .
+
+
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#esta_a_prop
+:esta_a_prop rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf owl:topObjectProperty ;
+             rdfs:domain :Localitat ;
+             rdfs:range :Localitat .
+
+
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#necessitat_servei
+:necessitat_servei rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf owl:topObjectProperty ;
+                   rdfs:domain :Persona ;
+                   rdfs:range :Servei .
+
+
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#no_vol_servei
+:no_vol_servei rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf owl:topObjectProperty ;
+               rdfs:domain :Persona ;
+               rdfs:range :Servei .
+
+
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#preferencia_servei
+:preferencia_servei rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf owl:topObjectProperty ;
+                    rdfs:domain :Persona ;
+                    rdfs:range :Servei .
+
+
+#################################################################
 #    Data properties
 #################################################################
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#aire_acondicionat
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyaire_acondicionat
 :aire_acondicionat rdf:type owl:DatatypeProperty ;
-                   rdfs:subPropertyOf owl:topDataProperty .
+                   rdfs:subPropertyOf owl:topDataProperty ;
+                   rdfs:domain :Vivenda .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#amoblada
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyamoblada
 :amoblada rdf:type owl:DatatypeProperty ;
-          rdfs:subPropertyOf owl:topDataProperty .
+          rdfs:subPropertyOf owl:topDataProperty ;
+          rdfs:domain :Vivenda .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#balco
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologybalco
 :balco rdf:type owl:DatatypeProperty ;
-       rdfs:subPropertyOf owl:topDataProperty .
+       rdfs:subPropertyOf owl:topDataProperty ;
+       rdfs:domain :Vivenda .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#calefaccio
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologycalefaccio
 :calefaccio rdf:type owl:DatatypeProperty ;
-            rdfs:subPropertyOf owl:topDataProperty .
+            rdfs:subPropertyOf owl:topDataProperty ;
+            rdfs:domain :Vivenda .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#coordX
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologycoordX
 :coordX rdf:type owl:DatatypeProperty ;
         rdfs:subPropertyOf owl:topDataProperty ;
         rdfs:domain :Localitat .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#coordY
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologycoordY
 :coordY rdf:type owl:DatatypeProperty ;
         rdfs:subPropertyOf owl:topDataProperty ;
         rdfs:domain :Localitat .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#cotxe
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologycotxe
 :cotxe rdf:type owl:DatatypeProperty ;
-       rdfs:subPropertyOf owl:topDataProperty .
+       rdfs:subPropertyOf owl:topDataProperty ;
+       rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Solicitant> .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#edat
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyedat
 :edat rdf:type owl:DatatypeProperty ;
-      rdfs:subPropertyOf owl:topDataProperty .
+      rdfs:subPropertyOf owl:topDataProperty ;
+      rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Solicitant> .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#electrodomestics
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyelectrodomestics
 :electrodomestics rdf:type owl:DatatypeProperty ;
-                  rdfs:subPropertyOf owl:topDataProperty .
+                  rdfs:subPropertyOf owl:topDataProperty ;
+                  rdfs:domain :Vivenda .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#garaje
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologygaraje
 :garaje rdf:type owl:DatatypeProperty ;
-        rdfs:subPropertyOf owl:topDataProperty .
+        rdfs:subPropertyOf owl:topDataProperty ;
+        rdfs:domain :Vivenda .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#mascota
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologymascota
 :mascota rdf:type owl:DatatypeProperty ;
-         rdfs:subPropertyOf owl:topDataProperty .
+         rdfs:subPropertyOf owl:topDataProperty ;
+         rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Solicitant> ,
+                     :Vivenda .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#piscina
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologypiscina
 :piscina rdf:type owl:DatatypeProperty ;
-         rdfs:subPropertyOf owl:topDataProperty .
+         rdfs:subPropertyOf owl:topDataProperty ;
+         rdfs:domain :Vivenda .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#planta
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyplanta
 :planta rdf:type owl:DatatypeProperty ;
-        rdfs:subPropertyOf owl:topDataProperty .
+        rdfs:subPropertyOf owl:topDataProperty ;
+        rdfs:domain :Vivenda .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#pref_transport_public
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologypref_transport_public
 :pref_transport_public rdf:type owl:DatatypeProperty ;
-                       rdfs:subPropertyOf owl:topDataProperty .
+                       rdfs:subPropertyOf owl:topDataProperty ;
+                       rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Solicitant> .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#preu
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologypreu
 :preu rdf:type owl:DatatypeProperty ;
-      rdfs:subPropertyOf owl:topDataProperty .
+      rdfs:subPropertyOf owl:topDataProperty ;
+      rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Solicitant> ,
+                  :Vivenda .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#solejat
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologysolejat
 :solejat rdf:type owl:DatatypeProperty ;
-         rdfs:subPropertyOf owl:topDataProperty .
+         rdfs:subPropertyOf owl:topDataProperty ;
+         rdfs:domain :Vivenda .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#superficie
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologysuperficie
 :superficie rdf:type owl:DatatypeProperty ;
-            rdfs:subPropertyOf owl:topDataProperty .
+            rdfs:subPropertyOf owl:topDataProperty ;
+            rdfs:domain :Vivenda .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#terraza
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyterraza
 :terraza rdf:type owl:DatatypeProperty ;
-         rdfs:subPropertyOf owl:topDataProperty .
+         rdfs:subPropertyOf owl:topDataProperty ;
+         rdfs:domain :Vivenda .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#vivenda_amb_vistes
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyvivenda_amb_vistes
 :vivenda_amb_vistes rdf:type owl:DatatypeProperty ;
-                    rdfs:subPropertyOf owl:topDataProperty .
+                    rdfs:subPropertyOf owl:topDataProperty ;
+                    rdfs:domain :Vivenda .
+
+
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#num_dormitoris
+:num_dormitoris rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf owl:topDataProperty ;
+                rdfs:domain :Vivenda .
+
+
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#num_membres
+:num_membres rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:domain :Grup_estudiants .
 
 
 #################################################################
 #    Classes
 #################################################################
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#Biparental
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/Solicitant
+<http://www.semanticweb.org/usuario/ontologies/2021/10/Solicitant> rdf:type owl:Class ;
+                                                                   rdfs:subClassOf :Persona ;
+                                                                   owl:disjointWith :Dependent .
+
+
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyBiparental
 :Biparental rdf:type owl:Class ;
             rdfs:subClassOf :Familia ;
             owl:disjointWith :Monoparental .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#CentreSalud
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyCentreSalud
 :CentreSalud rdf:type owl:Class ;
              rdfs:subClassOf :Servei .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#Dependent
-:Dependent rdf:type owl:Class .
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyDependent
+:Dependent rdf:type owl:Class ;
+           rdfs:subClassOf :Persona .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#Escolas
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyEscolas
 :Escolas rdf:type owl:Class ;
          rdfs:subClassOf :Servei .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#Familia
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyFamilia
 :Familia rdf:type owl:Class ;
-         rdfs:subClassOf :Solicitant .
+         rdfs:subClassOf <http://www.semanticweb.org/usuario/ontologies/2021/10/Solicitant> .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#Fill
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyFill
 :Fill rdf:type owl:Class ;
       rdfs:subClassOf :Dependent ;
       owl:disjointWith :PersonaGran .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#Grup_estudiants
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyGrup_estudiants
 :Grup_estudiants rdf:type owl:Class ;
-                 rdfs:subClassOf :Solicitant .
+                 rdfs:subClassOf <http://www.semanticweb.org/usuario/ontologies/2021/10/Solicitant> .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#Hipermercats
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyHipermercats
 :Hipermercats rdf:type owl:Class ;
               rdfs:subClassOf :SuperMercats .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#Individual
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyIndividual
 :Individual rdf:type owl:Class ;
-            rdfs:subClassOf :Solicitant .
+            rdfs:subClassOf <http://www.semanticweb.org/usuario/ontologies/2021/10/Solicitant> .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#Localitat
-:Localitat rdf:type owl:Class .
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyLocalitat
+:Localitat rdf:type owl:Class ;
+           owl:disjointWith :Persona .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#Monoparental
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyMonoparental
 :Monoparental rdf:type owl:Class ;
               rdfs:subClassOf :Familia .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#Oci
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyOci
 :Oci rdf:type owl:Class ;
      rdfs:subClassOf :Servei .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#Parella_fills_proxim
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyParella_fills_proxim
 :Parella_fills_proxim rdf:type owl:Class ;
-                      rdfs:subClassOf :Solicitant .
+                      rdfs:subClassOf <http://www.semanticweb.org/usuario/ontologies/2021/10/Solicitant> .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#Parella_sense_fills
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyParella_sense_fills
 :Parella_sense_fills rdf:type owl:Class ;
-                     rdfs:subClassOf :Solicitant .
+                     rdfs:subClassOf <http://www.semanticweb.org/usuario/ontologies/2021/10/Solicitant> .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#PersonaGran
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyPersonaGran
 :PersonaGran rdf:type owl:Class ;
              rdfs:subClassOf :Dependent .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#Pis
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyPis
 :Pis rdf:type owl:Class ;
-     rdfs:subClassOf :Vivenda .
+     rdfs:subClassOf :Vivenda ;
+     owl:disjointWith :duplex ,
+                      :unifamiliar .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#Servei
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyServei
 :Servei rdf:type owl:Class ;
-        rdfs:subClassOf :Localitat .
+        rdfs:subClassOf :Localitat ;
+        owl:disjointWith :Vivenda .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#Solicitant
-:Solicitant rdf:type owl:Class .
-
-
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#SuperMercats
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologySuperMercats
 :SuperMercats rdf:type owl:Class ;
               rdfs:subClassOf :Servei .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#TransportPublic
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyTransportPublic
 :TransportPublic rdf:type owl:Class ;
                  rdfs:subClassOf :Servei .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#Vivenda
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyVivenda
 :Vivenda rdf:type owl:Class ;
          rdfs:subClassOf :Localitat .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#ZonasVerdes
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyZonasVerdes
 :ZonasVerdes rdf:type owl:Class ;
              rdfs:subClassOf :Servei .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#duplex
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyduplex
 :duplex rdf:type owl:Class ;
-        rdfs:subClassOf :Vivenda .
+        rdfs:subClassOf :Vivenda ;
+        owl:disjointWith :unifamiliar .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#unifamiliar
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontologyunifamiliar
 :unifamiliar rdf:type owl:Class ;
              rdfs:subClassOf :Vivenda .
+
+
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#Persona
+:Persona rdf:type owl:Class .
 
 
 #################################################################
@@ -249,28 +331,11 @@
 
 
 [ rdf:type owl:AllDisjointClasses ;
-  owl:members ( :Dependent
-                :Localitat
-                :Solicitant
-              )
-] .
-
-
-[ rdf:type owl:AllDisjointClasses ;
   owl:members ( :Familia
                 :Grup_estudiants
                 :Individual
                 :Parella_fills_proxim
                 :Parella_sense_fills
-              )
-] .
-
-
-[ rdf:type owl:AllDisjointClasses ;
-  owl:members ( :Localitat
-                :Servei
-                :Solicitant
-                :Vivenda
               )
 ] .
 
