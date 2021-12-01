@@ -2,7 +2,7 @@
 ;;; Documents/GitHub/IA-Sistemas-Basados-Conococimiento/Ontologia/ProjectOntology.clp
 ;;; Translated by owl2clips
 ;;; Translated to CLIPS from ontology Documents/GitHub/IA-Sistemas-Basados-Conococimiento/Ontologia/ProjectOntology.owl
-;;; :Date 27/11/2021 03:57:34
+;;; :Date 01/12/2021 10:26:29
 
 (defclass Localitat
     (is-a USER)
