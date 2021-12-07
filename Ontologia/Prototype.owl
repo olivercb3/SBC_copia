@@ -419,66 +419,71 @@ owl:topDataProperty rdfs:range xsd:boolean .
 #    Individuals
 #################################################################
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#Chabola
-:Chabola rdf:type owl:NamedIndividual ,
-                  <http://www.semanticweb.org/usuario/ontologies/2021/10/Vivenda> .
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/Chabola
+<http://www.semanticweb.org/usuario/ontologies/2021/10/Chabola> rdf:type owl:NamedIndividual ,
+                                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/Vivenda> ;
+                                                                <http://www.semanticweb.org/usuario/ontologies/2021/10/te_car_vivenda> <http://www.semanticweb.org/usuario/ontologies/2021/10/carChabola> .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#Joan
-:Joan rdf:type owl:NamedIndividual ,
-               <http://www.semanticweb.org/usuario/ontologies/2021/10/Solicitant> ;
-      <http://www.semanticweb.org/usuario/ontologies/2021/10/edat> 20 .
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/Joan
+<http://www.semanticweb.org/usuario/ontologies/2021/10/Joan> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.semanticweb.org/usuario/ontologies/2021/10/Solicitant> ;
+                                                             <http://www.semanticweb.org/usuario/ontologies/2021/10/te_car_solicitant> <http://www.semanticweb.org/usuario/ontologies/2021/10/carJoan> ;
+                                                             <http://www.semanticweb.org/usuario/ontologies/2021/10/edat> 20 .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#Mansio
-:Mansio rdf:type owl:NamedIndividual ,
-                 <http://www.semanticweb.org/usuario/ontologies/2021/10/Vivenda> .
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/Mansio
+<http://www.semanticweb.org/usuario/ontologies/2021/10/Mansio> rdf:type owl:NamedIndividual ,
+                                                                        <http://www.semanticweb.org/usuario/ontologies/2021/10/Vivenda> ;
+                                                               <http://www.semanticweb.org/usuario/ontologies/2021/10/te_car_vivenda> <http://www.semanticweb.org/usuario/ontologies/2021/10/carMansio> .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#Maria
-:Maria rdf:type owl:NamedIndividual ,
-                <http://www.semanticweb.org/usuario/ontologies/2021/10/Solicitant> ;
-       <http://www.semanticweb.org/usuario/ontologies/2021/10/edat> 25 .
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/Maria
+<http://www.semanticweb.org/usuario/ontologies/2021/10/Maria> rdf:type owl:NamedIndividual ,
+                                                                       <http://www.semanticweb.org/usuario/ontologies/2021/10/Solicitant> ;
+                                                              <http://www.semanticweb.org/usuario/ontologies/2021/10/te_car_solicitant> <http://www.semanticweb.org/usuario/ontologies/2021/10/carMaria> ;
+                                                              <http://www.semanticweb.org/usuario/ontologies/2021/10/edat> 25 .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#Piset
-:Piset rdf:type owl:NamedIndividual ,
-                <http://www.semanticweb.org/usuario/ontologies/2021/10/Vivenda> .
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/Piset
+<http://www.semanticweb.org/usuario/ontologies/2021/10/Piset> rdf:type owl:NamedIndividual ,
+                                                                       <http://www.semanticweb.org/usuario/ontologies/2021/10/Vivenda> ;
+                                                              <http://www.semanticweb.org/usuario/ontologies/2021/10/te_car_vivenda> <http://www.semanticweb.org/usuario/ontologies/2021/10/carPiset> .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#carChabola
-:carChabola rdf:type owl:NamedIndividual ,
-                     <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Vivenda> ;
-            <http://www.semanticweb.org/usuario/ontologies/2021/10/balco> "false"^^xsd:boolean ;
-            <http://www.semanticweb.org/usuario/ontologies/2021/10/preu> 500 .
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/carChabola
+<http://www.semanticweb.org/usuario/ontologies/2021/10/carChabola> rdf:type owl:NamedIndividual ,
+                                                                            <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Vivenda> ;
+                                                                   <http://www.semanticweb.org/usuario/ontologies/2021/10/balco> "false"^^xsd:boolean ;
+                                                                   <http://www.semanticweb.org/usuario/ontologies/2021/10/preu> 500 .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#carJoan
-:carJoan rdf:type owl:NamedIndividual ,
-                  <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Solicitant> ;
-         <http://www.semanticweb.org/usuario/ontologies/2021/10/balco> "false"^^xsd:boolean ;
-         <http://www.semanticweb.org/usuario/ontologies/2021/10/preu_solicitant> 1000 .
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/carJoan
+<http://www.semanticweb.org/usuario/ontologies/2021/10/carJoan> rdf:type owl:NamedIndividual ,
+                                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Solicitant> ;
+                                                                <http://www.semanticweb.org/usuario/ontologies/2021/10/balco> "false"^^xsd:boolean ;
+                                                                <http://www.semanticweb.org/usuario/ontologies/2021/10/preu_solicitant> 1000 .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#carMansio
-:carMansio rdf:type owl:NamedIndividual ,
-                    <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Vivenda> ;
-           <http://www.semanticweb.org/usuario/ontologies/2021/10/balco> "true"^^xsd:boolean ;
-           <http://www.semanticweb.org/usuario/ontologies/2021/10/preu> 3200 .
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/carMansio
+<http://www.semanticweb.org/usuario/ontologies/2021/10/carMansio> rdf:type owl:NamedIndividual ,
+                                                                           <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Vivenda> ;
+                                                                  <http://www.semanticweb.org/usuario/ontologies/2021/10/balco> "true"^^xsd:boolean ;
+                                                                  <http://www.semanticweb.org/usuario/ontologies/2021/10/preu> 3200 .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#carMaria
-:carMaria rdf:type owl:NamedIndividual ,
-                   <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Solicitant> ;
-          <http://www.semanticweb.org/usuario/ontologies/2021/10/balco> "true"^^xsd:boolean ;
-          <http://www.semanticweb.org/usuario/ontologies/2021/10/preu_solicitant> 4000 .
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/carMaria
+<http://www.semanticweb.org/usuario/ontologies/2021/10/carMaria> rdf:type owl:NamedIndividual ,
+                                                                          <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Solicitant> ;
+                                                                 <http://www.semanticweb.org/usuario/ontologies/2021/10/balco> "true"^^xsd:boolean ;
+                                                                 <http://www.semanticweb.org/usuario/ontologies/2021/10/preu_solicitant> 4000 .
 
 
-###  http://www.semanticweb.org/usuario/ontologies/2021/10/ia-ontology#carPiset
-:carPiset rdf:type owl:NamedIndividual ,
-                   <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Vivenda> ;
-          <http://www.semanticweb.org/usuario/ontologies/2021/10/balco> "true"^^xsd:boolean ;
-          <http://www.semanticweb.org/usuario/ontologies/2021/10/preu> 1200 .
+###  http://www.semanticweb.org/usuario/ontologies/2021/10/carPiset
+<http://www.semanticweb.org/usuario/ontologies/2021/10/carPiset> rdf:type owl:NamedIndividual ,
+                                                                          <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Vivenda> ;
+                                                                 <http://www.semanticweb.org/usuario/ontologies/2021/10/balco> "true"^^xsd:boolean ;
+                                                                 <http://www.semanticweb.org/usuario/ontologies/2021/10/preu> 1200 .
 
 
 #################################################################
