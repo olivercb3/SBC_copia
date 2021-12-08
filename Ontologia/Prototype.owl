@@ -72,6 +72,7 @@
 ###  http://www.semanticweb.org/usuario/ontologies/2021/10/te_car_solicitant
 <http://www.semanticweb.org/usuario/ontologies/2021/10/te_car_solicitant> rdf:type owl:ObjectProperty ;
                                                                           rdfs:subPropertyOf <http://www.semanticweb.org/usuario/ontologies/2021/10/te_caracteristiques> ;
+                                                                          rdf:type owl:FunctionalProperty ;
                                                                           rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Solicitant> ;
                                                                           rdfs:range <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Solicitant> .
 
@@ -79,6 +80,7 @@
 ###  http://www.semanticweb.org/usuario/ontologies/2021/10/te_car_vivenda
 <http://www.semanticweb.org/usuario/ontologies/2021/10/te_car_vivenda> rdf:type owl:ObjectProperty ;
                                                                        rdfs:subPropertyOf <http://www.semanticweb.org/usuario/ontologies/2021/10/te_caracteristiques> ;
+                                                                       rdf:type owl:FunctionalProperty ;
                                                                        rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Vivenda> ;
                                                                        rdfs:range <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Vivenda> .
 
@@ -94,6 +96,7 @@
 ###  http://www.semanticweb.org/usuario/ontologies/2021/10/aire_condicionat
 <http://www.semanticweb.org/usuario/ontologies/2021/10/aire_condicionat> rdf:type owl:DatatypeProperty ;
                                                                          rdfs:subPropertyOf owl:topDataProperty ;
+                                                                         rdf:type owl:FunctionalProperty ;
                                                                          rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Caracteristiques> ;
                                                                          rdfs:range xsd:boolean .
 
@@ -101,6 +104,7 @@
 ###  http://www.semanticweb.org/usuario/ontologies/2021/10/balco
 <http://www.semanticweb.org/usuario/ontologies/2021/10/balco> rdf:type owl:DatatypeProperty ;
                                                               rdfs:subPropertyOf owl:topDataProperty ;
+                                                              rdf:type owl:FunctionalProperty ;
                                                               rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Caracteristiques> ;
                                                               rdfs:range xsd:boolean .
 
@@ -108,6 +112,7 @@
 ###  http://www.semanticweb.org/usuario/ontologies/2021/10/calefaccio
 <http://www.semanticweb.org/usuario/ontologies/2021/10/calefaccio> rdf:type owl:DatatypeProperty ;
                                                                    rdfs:subPropertyOf owl:topDataProperty ;
+                                                                   rdf:type owl:FunctionalProperty ;
                                                                    rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Caracteristiques> ;
                                                                    rdfs:range xsd:boolean .
 
@@ -115,6 +120,7 @@
 ###  http://www.semanticweb.org/usuario/ontologies/2021/10/coordX
 <http://www.semanticweb.org/usuario/ontologies/2021/10/coordX> rdf:type owl:DatatypeProperty ;
                                                                rdfs:subPropertyOf owl:topDataProperty ;
+                                                               rdf:type owl:FunctionalProperty ;
                                                                rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Localitat> ;
                                                                rdfs:range xsd:integer .
 
@@ -122,12 +128,14 @@
 ###  http://www.semanticweb.org/usuario/ontologies/2021/10/coordY
 <http://www.semanticweb.org/usuario/ontologies/2021/10/coordY> rdf:type owl:DatatypeProperty ;
                                                                rdfs:subPropertyOf owl:topDataProperty ;
+                                                               rdf:type owl:FunctionalProperty ;
                                                                rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Localitat> ;
                                                                rdfs:range xsd:integer .
 
 
 ###  http://www.semanticweb.org/usuario/ontologies/2021/10/cotxe
-<http://www.semanticweb.org/usuario/ontologies/2021/10/cotxe> rdf:type owl:DatatypeProperty ;
+<http://www.semanticweb.org/usuario/ontologies/2021/10/cotxe> rdf:type owl:DatatypeProperty ,
+                                                                       owl:FunctionalProperty ;
                                                               rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Solicitant> ;
                                                               rdfs:range xsd:boolean .
 
@@ -135,6 +143,7 @@
 ###  http://www.semanticweb.org/usuario/ontologies/2021/10/edat
 <http://www.semanticweb.org/usuario/ontologies/2021/10/edat> rdf:type owl:DatatypeProperty ;
                                                              rdfs:subPropertyOf owl:topDataProperty ;
+                                                             rdf:type owl:FunctionalProperty ;
                                                              rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Solicitant> ;
                                                              rdfs:range xsd:integer .
 
@@ -142,6 +151,7 @@
 ###  http://www.semanticweb.org/usuario/ontologies/2021/10/electrodomestics
 <http://www.semanticweb.org/usuario/ontologies/2021/10/electrodomestics> rdf:type owl:DatatypeProperty ;
                                                                          rdfs:subPropertyOf owl:topDataProperty ;
+                                                                         rdf:type owl:FunctionalProperty ;
                                                                          rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Caracteristiques> ;
                                                                          rdfs:range xsd:boolean .
 
@@ -149,6 +159,7 @@
 ###  http://www.semanticweb.org/usuario/ontologies/2021/10/garatge
 <http://www.semanticweb.org/usuario/ontologies/2021/10/garatge> rdf:type owl:DatatypeProperty ;
                                                                 rdfs:subPropertyOf owl:topDataProperty ;
+                                                                rdf:type owl:FunctionalProperty ;
                                                                 rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Caracteristiques> ;
                                                                 rdfs:range xsd:boolean .
 
@@ -156,6 +167,7 @@
 ###  http://www.semanticweb.org/usuario/ontologies/2021/10/mascota
 <http://www.semanticweb.org/usuario/ontologies/2021/10/mascota> rdf:type owl:DatatypeProperty ;
                                                                 rdfs:subPropertyOf owl:topDataProperty ;
+                                                                rdf:type owl:FunctionalProperty ;
                                                                 rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Caracteristiques> ;
                                                                 rdfs:range xsd:boolean .
 
@@ -163,6 +175,7 @@
 ###  http://www.semanticweb.org/usuario/ontologies/2021/10/moblada
 <http://www.semanticweb.org/usuario/ontologies/2021/10/moblada> rdf:type owl:DatatypeProperty ;
                                                                 rdfs:subPropertyOf owl:topDataProperty ;
+                                                                rdf:type owl:FunctionalProperty ;
                                                                 rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Caracteristiques> ;
                                                                 rdfs:range xsd:boolean .
 
@@ -170,6 +183,7 @@
 ###  http://www.semanticweb.org/usuario/ontologies/2021/10/num_dormitoris
 <http://www.semanticweb.org/usuario/ontologies/2021/10/num_dormitoris> rdf:type owl:DatatypeProperty ;
                                                                        rdfs:subPropertyOf owl:topDataProperty ;
+                                                                       rdf:type owl:FunctionalProperty ;
                                                                        rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Caracteristiques> ;
                                                                        rdfs:range xsd:integer .
 
@@ -177,6 +191,7 @@
 ###  http://www.semanticweb.org/usuario/ontologies/2021/10/num_membres_grup
 <http://www.semanticweb.org/usuario/ontologies/2021/10/num_membres_grup> rdf:type owl:DatatypeProperty ;
                                                                          rdfs:subPropertyOf owl:topDataProperty ;
+                                                                         rdf:type owl:FunctionalProperty ;
                                                                          rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Solicitant> ;
                                                                          rdfs:range xsd:integer .
 
@@ -184,6 +199,7 @@
 ###  http://www.semanticweb.org/usuario/ontologies/2021/10/piscina
 <http://www.semanticweb.org/usuario/ontologies/2021/10/piscina> rdf:type owl:DatatypeProperty ;
                                                                 rdfs:subPropertyOf owl:topDataProperty ;
+                                                                rdf:type owl:FunctionalProperty ;
                                                                 rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Caracteristiques> ;
                                                                 rdfs:range xsd:boolean .
 
@@ -191,6 +207,7 @@
 ###  http://www.semanticweb.org/usuario/ontologies/2021/10/planta
 <http://www.semanticweb.org/usuario/ontologies/2021/10/planta> rdf:type owl:DatatypeProperty ;
                                                                rdfs:subPropertyOf owl:topDataProperty ;
+                                                               rdf:type owl:FunctionalProperty ;
                                                                rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Caracteristiques> ;
                                                                rdfs:range xsd:integer .
 
@@ -198,6 +215,7 @@
 ###  http://www.semanticweb.org/usuario/ontologies/2021/10/pref_transport_public
 <http://www.semanticweb.org/usuario/ontologies/2021/10/pref_transport_public> rdf:type owl:DatatypeProperty ;
                                                                               rdfs:subPropertyOf owl:topDataProperty ;
+                                                                              rdf:type owl:FunctionalProperty ;
                                                                               rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Solicitant> ;
                                                                               rdfs:range xsd:boolean .
 
@@ -205,12 +223,14 @@
 ###  http://www.semanticweb.org/usuario/ontologies/2021/10/preu
 <http://www.semanticweb.org/usuario/ontologies/2021/10/preu> rdf:type owl:DatatypeProperty ;
                                                              rdfs:subPropertyOf owl:topDataProperty ;
+                                                             rdf:type owl:FunctionalProperty ;
                                                              rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Vivenda> ;
                                                              rdfs:range xsd:integer .
 
 
 ###  http://www.semanticweb.org/usuario/ontologies/2021/10/preu_solicitant
-<http://www.semanticweb.org/usuario/ontologies/2021/10/preu_solicitant> rdf:type owl:DatatypeProperty ;
+<http://www.semanticweb.org/usuario/ontologies/2021/10/preu_solicitant> rdf:type owl:DatatypeProperty ,
+                                                                                 owl:FunctionalProperty ;
                                                                         rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Solicitant> ;
                                                                         rdfs:range xsd:integer .
 
@@ -218,6 +238,7 @@
 ###  http://www.semanticweb.org/usuario/ontologies/2021/10/solejat
 <http://www.semanticweb.org/usuario/ontologies/2021/10/solejat> rdf:type owl:DatatypeProperty ;
                                                                 rdfs:subPropertyOf owl:topDataProperty ;
+                                                                rdf:type owl:FunctionalProperty ;
                                                                 rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Caracteristiques> ;
                                                                 rdfs:range xsd:boolean .
 
@@ -225,12 +246,14 @@
 ###  http://www.semanticweb.org/usuario/ontologies/2021/10/superficie
 <http://www.semanticweb.org/usuario/ontologies/2021/10/superficie> rdf:type owl:DatatypeProperty ;
                                                                    rdfs:subPropertyOf owl:topDataProperty ;
+                                                                   rdf:type owl:FunctionalProperty ;
                                                                    rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Vivenda> ;
                                                                    rdfs:range xsd:integer .
 
 
 ###  http://www.semanticweb.org/usuario/ontologies/2021/10/superficie_solicitant
-<http://www.semanticweb.org/usuario/ontologies/2021/10/superficie_solicitant> rdf:type owl:DatatypeProperty ;
+<http://www.semanticweb.org/usuario/ontologies/2021/10/superficie_solicitant> rdf:type owl:DatatypeProperty ,
+                                                                                       owl:FunctionalProperty ;
                                                                               rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Solicitant> ;
                                                                               rdfs:range xsd:integer .
 
@@ -238,6 +261,7 @@
 ###  http://www.semanticweb.org/usuario/ontologies/2021/10/terrassa
 <http://www.semanticweb.org/usuario/ontologies/2021/10/terrassa> rdf:type owl:DatatypeProperty ;
                                                                  rdfs:subPropertyOf owl:topDataProperty ;
+                                                                 rdf:type owl:FunctionalProperty ;
                                                                  rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Caracteristiques> ;
                                                                  rdfs:range xsd:boolean .
 
@@ -245,6 +269,7 @@
 ###  http://www.semanticweb.org/usuario/ontologies/2021/10/vivenda_amb_vistes
 <http://www.semanticweb.org/usuario/ontologies/2021/10/vivenda_amb_vistes> rdf:type owl:DatatypeProperty ;
                                                                            rdfs:subPropertyOf owl:topDataProperty ;
+                                                                           rdf:type owl:FunctionalProperty ;
                                                                            rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Caracteristiques> ;
                                                                            rdfs:range xsd:boolean .
 
