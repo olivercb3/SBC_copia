@@ -1,0 +1,22 @@
+;;;----------Print Outs--------------
+
+(deffunction printSolicitants (?s)
+    (printout t "Solicitant: " crlf)
+    (printout t (instance-name ?s) crlf)
+    (printout t  (send ?s get-edat) crlf)
+    (bind ?c (send ?s get-te_car_solicitant))
+    (bind ?preu (send ?c get-preu_solicitant))
+    (bind ?balco (send ?c get-balco))
+    (printout t "preu_solictant: "   ?preu crlf)
+    (printout t "balco: "   ?balco crlf)
+)
+
+(deffunction printVivenda (?v)
+    (printout t "Vivenda: " crlf)
+    (printout t (instance-name ?v) crlf)
+    (bind ?c (send ?v get-te_car_vivenda))
+    (bind ?preu (send ?c get-preu))
+    (bind ?balco (send ?c get-balco))
+    (printout t "Preu Vivenda: " ?preu crlf)
+    (printout t "Balco: "   ?balco crlf)
+)
