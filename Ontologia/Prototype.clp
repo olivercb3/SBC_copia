@@ -298,7 +298,7 @@
 
     ([carChabola] of Car_Vivenda
          (preu  500)
-         (balco  "false")
+         (balco  "FALSE")
     )
 
     ([carJoan] of Car_Solicitant
@@ -307,7 +307,7 @@
 
     ([carMansio] of Car_Vivenda
          (preu  3200)
-         (balco  "true")
+         (balco  "TRUE")
     )
 
     ([carMaria] of Car_Solicitant
@@ -316,7 +316,7 @@
 
     ([carPiset] of Car_Vivenda
          (preu  900)
-         (balco  "true")
+         (balco  "TRUE")
     )
 
     ([ia-ontologyCinema] of Oci

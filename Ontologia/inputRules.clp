@@ -1,11 +1,16 @@
+;;template per les Caracteristiques dels solicitants.
+(deftemplate CarSolicitant
+    (slot preu (type INTEGER))
+	  (slot garatge (type SYMBOL) (allowed-values FALSE TRUE) (default FALSE))
+    (slot balco (type SYMBOL) (allowed-values FALSE TRUE) (default FALSE))
+)
+
 (defrule main "Main"
   ;;hauria de ser amb initial-fact pero no sabem com es fa
   ?trigger <- (initial-main)
 	=>
 	(printout t crlf)
-	(printout t "--------------------------------------------------------------" crlf)
-	(printout t "----------- Sistema de Recomendacion de Viviendas ------------" crlf)
-	(printout t "--------------------------------------------------------------" crlf)
+	(printout t "----------- Prototip Inicial ------------" crlf)
 	(assert (preguntar))
 )
 
@@ -13,39 +18,74 @@
 (defrule PreguntasAlSolicitant
     ?trigger <- (preguntar)
     =>
+    ;;Preguntar preu
+    (bind ?pPreu (preguntaInteger "Quin és el teu pressupost?" 0 10000))
+
     ;;Pregunta si vols balco
     (bind ?pBalco (preguntaBinaria "Vols Balco?"))
-    (if (eq ?pBalco TRUE)
-      then (printout t "Vol Balconaco" crlf)
-      else (printout t "No vol balco" crlf)
+
+    ;;Preguntar garatge
+    (bind ?pGaratge FALSE)
+    (bind ?pCotxe (preguntaBinaria "Tens cotxe?"))
+    (if (eq ?pCotxe TRUE)
+      then (bind ?pGaratge (preguntaBinaria "Necessites tenir un garatge?"))
     )
-    ;;Preguntar preu
-    (bind ?pPreu (preguntaInteger "Dollars?" 0 10000))
-    (printout t "El meu preu es " ?pPreu crlf)
 
     (retract ?trigger)
 
     ;;(assert (sPreu ?pPreu))
-    ;;(assert (sBalco ?pPreu))
-    (assert (cerca))
+    ;;(assert (sBalco ?pBalco))
+    ;;(assert (cerca))
+
+    (assert (CarSolicitant
+      (preu ?pPreu)
+      (balco ?pBalco)
+      (garatge ?pGaratge)
+      )
+    )
+    (assert (cercar))
 )
 
 (defrule buscaPossibles
-    ?trigger <- (cerca)
+    ?CarSolicitant <- (CarSolicitant
+      (preu ?pPreu)
+      (balco ?pBalco)
+      (garatge ?pGaratge)
+    )
+
+    ?trigger <- (cercar)
     =>
     (printout t crlf)
-  	(printout t "Buscando viviendas..." crlf)
+  	(printout t "...Buscant vivendes..." crlf)
   	(printout t crlf)
+
     ;;Possibles Viviendas
-    (printout t "Totes les possibles" crlf)
+
     (bind $?viviendas (find-all-instances ((?ins Vivenda)) TRUE))
     (bind ?n (length$ (find-all-instances ((?ins Car_Vivenda)) TRUE)))
-    (printout t "Hi ha nº " ?n " vivendes" crlf)
+    (printout t "Hi ha " ?n " vivendes" crlf)
     (loop-for-count (?i 1 (length$ $?viviendas)) do
-		    ;;La instancia de vivienda que vamos a tratar
-        (printout t "Vivenda nº " ?i ": " crlf)
+
+		    ;;La instancia de vivenda que tractarem
+        ;;(printout t "Vivenda nº " ?i ": " crlf)
 		    (bind ?curr-obj (nth$ ?i ?viviendas))
-        (printVivenda ?curr-obj)
+
+        (bind ?c (send ?curr-obj get-te_car_vivenda))
+        (bind ?curr-preu (send ?c get-preu))
+        (bind ?teBalco (send ?c get-balco))
+
+        (if (<= ?curr-preu ?pPreu)
+          then
+          (if (eq ?pBalco TRUE)
+            then
+            (if (eq ?teBalco TRUE)
+              then (printVivenda ?curr-obj))
+            else
+            (if (eq ?teBalco FALSE)
+              then (printVivenda ?curr-obj))
+          )
         )
+
+    )
     (retract ?trigger)
 )
