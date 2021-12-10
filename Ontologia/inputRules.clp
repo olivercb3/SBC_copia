@@ -9,6 +9,7 @@
   ;;hauria de ser amb initial-fact pero no sabem com es fa
   ?trigger <- (initial-main)
 	=>
+	(reset)
 	(printout t crlf)
 	(printout t "----------- Prototip Inicial ------------" crlf)
 	(assert (preguntar))
@@ -59,31 +60,25 @@
   	(printout t "...Buscant vivendes..." crlf)
   	(printout t crlf)
 
-    ;;Possibles Viviendas
+    ;;Possibles vivendes
 
-    (bind $?viviendas (find-all-instances ((?ins Vivenda)) TRUE))
+    (bind $?vivendes (find-all-instances ((?ins Vivenda)) TRUE))
     (bind ?n (length$ (find-all-instances ((?ins Car_Vivenda)) TRUE)))
-    (printout t "Hi ha " ?n " vivendes" crlf)
-    (loop-for-count (?i 1 (length$ $?viviendas)) do
+    ;;(printout t "Hi ha " ?n " vivendes" crlf)
+    (loop-for-count (?i 1 (length$ $?vivendes)) do
 
-		    ;;La instancia de vivenda que tractarem
+	;;La instancia de vivenda que tractarem
         ;;(printout t "Vivenda nº " ?i ": " crlf)
-		    (bind ?curr-obj (nth$ ?i ?viviendas))
+	(bind ?curr-obj (nth$ ?i ?vivendes))
 
         (bind ?c (send ?curr-obj get-te_car_vivenda))
         (bind ?curr-preu (send ?c get-preu))
-        (bind ?teBalco (send ?c get-balco))
+        (bind ?curr-balco (if (eq (send ?c get-balco) "TRUE") then TRUE else FALSE))
+	(bind ?curr-garatge (if (eq (send ?c get-garatge) "TRUE") then TRUE else FALSE))
 
-        (if (<= ?curr-preu ?pPreu)
-          then
-          (if (eq ?pBalco TRUE)
-            then
-            (if (eq ?teBalco TRUE)
-              then (printVivenda ?curr-obj))
-            else
-            (if (eq ?teBalco FALSE)
-              then (printVivenda ?curr-obj))
-          )
+        (if (and (<= ?curr-preu ?pPreu) (eq ?curr-balco ?pBalco) (eq ?curr-garatge ?pGaratge))
+          then (printVivenda ?curr-obj)
+	  else (printout t "La vivenda " ?curr-obj " no satisfa les teves especificacions" crlf)
         )
 
     )

@@ -6,6 +6,4 @@
   (load "preguntasFunctions.clp")
   (load "printObjectesFuncions.clp")
   (load "inputRules.clp")
-  (reset)
-  (assert (initial-main))
 )
