@@ -1,0 +1,46 @@
+Preguntes?
+
+
+- Edat I
+- Tipus solicitant String
+***(Familia)
+    fills?  B
+    persones grans? B
+
+- Num Habitacions? I
+
+-preu Minim? I
+-preu Maxim? I
+
+- superficie minima? I
+- superficie maxima? I
+
+- garatge? B
+- balco o terrassa?  B
+
+- mascotas? B
+
+----Serveis-----
+Vols algun servei a prop?
+  ("
+    Centre Salud
+    Escoles
+    Hipermercats
+    supermercats
+    oci
+    TransportPublic
+    Zones Verdes
+  ")
+Vols algun més? ^
+
+No Vols algun servei a prop?
+("
+  Centre Salud
+  Escoles
+  Hipermercats
+  supermercats
+  oci
+  TransportPublic
+  Zones Verdes
+")
+No Vols algun més?
