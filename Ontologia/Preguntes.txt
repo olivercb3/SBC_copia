@@ -1,7 +1,8 @@
 Preguntes?
-
+"Per a establir qualsevol resposta com a prioritat, de tal manera que només es mostrin les propietats amb les especificacions concretades, introdueix la resposta seguida de "Segur". En cas contrari respon com faries en qualsevol altre cas."
 
 - Edat I
+"Edat del solicitant:"
 - Tipus solicitant String
 ***(Familia)
     fills?  B
@@ -9,17 +10,21 @@ Preguntes?
 
 - Num Habitacions? I
 
--preu Minim? I
+-preu Minim? 
+"Inserta el preu mínim"
 -preu Maxim? I
-
+"Inserta el preu màxim"
 - superficie minima? I
+"Estableix la superfície mínima"
 - superficie maxima? I
+"Estableix la superfície màxima"
 
 - garatge? B
+"Necessitaria garatge?"
 - balco o terrassa?  B
-
+"Necessitaria terrassa o balcó?"
 - mascotas? B
-
+"Tindria mascotes?"
 ----Serveis-----
 Vols algun servei a prop?
   ("
@@ -33,7 +38,7 @@ Vols algun servei a prop?
   ")
 Vols algun més? ^
 
-No Vols algun servei a prop?
+"A continuació indica quins dels següents serveis necessitaria aprop? Centre de Salut/Escoles/Supermercats/Oci/Transport Públic/Zona Verda"
 ("
   Centre Salud
   Escoles
