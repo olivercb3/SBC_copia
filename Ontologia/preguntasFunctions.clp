@@ -16,6 +16,21 @@
   )
 )
 
+;; Pregunta segur(si/no), (si/no), indiferent
+;;(bind ?pBalco (preguntaBinariaBis "Vols Balco?" (create$ "segur si" "si" "indifirent" "no" "segur no")))
+(deffunction preguntaBinariaBis (?text $?valors-permesos)
+    (progn$
+    (?var ?valors-permesos)
+    (lowcase ?var))
+  (format t "¿%s? (%s) " ?text (implode$ ?valors-permesos))
+  (bind ?r (read))
+  (while (not (member (lowcase ?r) ?valors-permesos)) do
+    (format t "¿%s? (%s) " ?text (implode$ ?valors-permesos))
+    (bind ?r (read))
+  )
+  ;;afegir la gestio de retorn (2...-2)
+)
+
 
 
 ;;; Pregunta per un integer
