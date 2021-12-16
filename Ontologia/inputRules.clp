@@ -13,17 +13,17 @@
     ?trigger <- (preguntar)
     =>
     ;;Preguntar preu
-    (bind ?pPreu (preguntaInteger "Quin és el teu pressupost?" 0 10000))
+    (bind ?pPreu 1000);;(preguntaInteger "Quin és el teu pressupost?" 0 10000))
 
     ;;Pregunta si vols balco
-    (bind ?pBalco (preguntaBinaria "Vols Balco?"))
+    (bind ?pBalco TRUE);;(preguntaBinaria "Vols Balco?"))
 
     ;;Preguntar garatge
     (bind ?pGaratge FALSE)
-    (bind ?pCotxe (preguntaBinaria "Tens cotxe?"))
-    (if (eq ?pCotxe TRUE)
-      then (bind ?pGaratge (preguntaBinaria "Necessites tenir un garatge?"))
-    )
+    ;;(bind ?pCotxe (preguntaBinaria "Tens cotxe?"))
+    ;;(if (eq ?pCotxe TRUE)
+      ;;then (bind ?pGaratge (preguntaBinaria "Necessites tenir un garatge?"))
+    ;;)
 
     (retract ?trigger)
 
@@ -37,12 +37,12 @@
 )
 
 (defrule buscaPossibles
+    ?trigger <- (cercar)
+    =>
     (bind ?pPreu (send [CarInput] get-preu_solicitant))
     (bind ?pBalco (send [CarInput] get-balco))
     (bind ?pGaratge (send [CarInput] get-garatge))
 
-    ?trigger <- (cercar)
-    =>
     (printout t crlf)
   	(printout t "...Buscant vivendes..." crlf)
   	(printout t crlf)
