@@ -17,18 +17,42 @@
 )
 
 ;; Pregunta segur(si/no), (si/no), indiferent
-;;(bind ?pBalco (preguntaBinariaBis "Vols Balco?" (create$ "segur si" "si" "indifirent" "no" "segur no")))
+
+;;les seguentes dues linies han d'anar al main
+
+;;(bind ?valorsPermesosBinari (create$ "Segur si" "Si" "Indiferent" "No" "Segur no"))      -    definim valors possibles
+;;(bind ?pBalco (preguntaBinariaBis "Vols balco?" ?valorsPermesosBinari))           -       preguntem i obtenim resultat
+
+
 (deffunction preguntaBinariaBis (?text $?valors-permesos)
     (progn$
     (?var ?valors-permesos)
     (lowcase ?var))
   (format t "¿%s? (%s) " ?text (implode$ ?valors-permesos))
   (bind ?r (read))
-  (while (not (member (lowcase ?r) ?valors-permesos)) do
+  (while (not (member (lowcase ?r) ?var)) do
     (format t "¿%s? (%s) " ?text (implode$ ?valors-permesos))
     (bind ?r (read))
   )
   ;;afegir la gestio de retorn (2...-2)
+  (if (eq (str-compare "segur si" ?r) 0)
+    then (bind ?resp 2)
+    else
+      (if (eq (str-compare "si" ?r) 0)
+        then (bind ?resp 1)
+        else
+          (if (eq (str-compare "indiferent" ?r) 0)
+            then (bind ?resp 0)
+            else
+              (if (eq (str-compare "no" ?r) 0)
+                then (bind ?resp -1)
+                else
+                  (bind ?resp -2)
+              )
+          )
+      )
+    )
+    ?resp
 )
 
 
@@ -44,6 +68,10 @@
 	)
 	?r
 )
+
+
+;; Pregunta integer bis
+
 
 ;;; Pregunta de qualsevol tipus
 (deffunction preguntaVariable (?text)
