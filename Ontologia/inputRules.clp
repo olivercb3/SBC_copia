@@ -1,10 +1,3 @@
-;;template per les Caracteristiques dels solicitants.
-(deftemplate CarSolicitant
-    (slot preu (type INTEGER))
-	  (slot garatge (type SYMBOL) (allowed-values FALSE TRUE) (default FALSE))
-    (slot balco (type SYMBOL) (allowed-values FALSE TRUE) (default FALSE))
-)
-
 (defrule main "Main"
   ;;hauria de ser amb initial-fact pero no sabem com es fa
   ?trigger <- (initial-main)
@@ -34,25 +27,19 @@
 
     (retract ?trigger)
 
-    ;;(assert (sPreu ?pPreu))
-    ;;(assert (sBalco ?pBalco))
-    ;;(assert (cerca))
-
-    (assert (CarSolicitant
-      (preu ?pPreu)
-      (balco ?pBalco)
-      (garatge ?pGaratge)
-      )
+    (make-instance CarInput of Car_Solicitant)
+    (modify-instance [CarInput]
+	(preu_solicitant ?pPreu)
+	(balco ?pBalco)
+	(garatge ?pGaratge)
     )
     (assert (cercar))
 )
 
 (defrule buscaPossibles
-    ?CarSolicitant <- (CarSolicitant
-      (preu ?pPreu)
-      (balco ?pBalco)
-      (garatge ?pGaratge)
-    )
+    (bind ?pPreu (send [CarInput] get-preu_solicitant))
+    (bind ?pBalco (send [CarInput] get-balco))
+    (bind ?pGaratge (send [CarInput] get-garatge))
 
     ?trigger <- (cercar)
     =>
