@@ -13,7 +13,7 @@
     ?trigger <- (preguntar)
     =>
     ;;Preguntar preu
-    (bind ?pPreu (preguntaInteger "Quin és el teu pressupost?" 0 10000))
+    (bind ?pPreu (preguntaIntegerBis "Quin és el teu pressupost?" 0 10000))
 
     (bind ?valorsPermesosBinari (create$ "segur si" "si" "indiferent" "no" "segur no"))
 

@@ -32,8 +32,6 @@
     ?resp
 )
 
-
-
 ;;; Pregunta per un integer
 (deffunction preguntaInteger (?text ?min ?max)
 	(printout t crlf)
@@ -48,7 +46,23 @@
 
 
 ;; Pregunta integer bis
+(deffunction preguntaIntegerBis (?text ?min ?max)
+	(format t "%s" ?text)
+  (printout t crlf)
+	(bind ?r (readline))
+  (bind ?resp (explode$ ?r))
 
+  (printout t (nth$ 1 ?resp))
+
+  (while (or(and(> (length$ ?resp) 1)(neq (lowcase (nth$ 1 ?resp)) segur)(>= (integer(nth$ 2 ?resp)) ?min)(<= (integer(nth$ 2 ?resp)) ?max)) (and(< (length$ ?resp) 1)(neq (lowcase (nth$ 1 ?resp)) indiferent)) (and(= (length$ ?resp) 1)(>= (integer(nth$ 1 ?resp)) ?min)(<= (integer(nth$ 2 ?resp)) ?max)))
+    do
+    (format t "%s (opcions: segur seguit d'un numero, numero o indiferent)" ?text)
+    (printout t crlf)
+    (bind ?r (readline))
+    (bind ?resp (explode$ ?r))
+  )
+  ?resp
+)
 
 ;;; Pregunta de qualsevol tipus
 (deffunction preguntaVariable (?text)
