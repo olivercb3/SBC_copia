@@ -13,10 +13,14 @@
     ?trigger <- (preguntar)
     =>
     ;;Preguntar preu
-    (bind ?pPreu 1000);;(preguntaInteger "Quin és el teu pressupost?" 0 10000))
+    (bind ?pPreu (preguntaInteger "Quin és el teu pressupost?" 0 10000))
+
+    (bind ?valorsPermesosBinari (create$ "segur si" "si" "indiferent" "no" "segur no"))
 
     ;;Pregunta si vols balco
-    (bind ?pBalco TRUE);;(preguntaBinaria "Vols Balco?"))
+    (bind ?pBalco (preguntaBinariaBis "Vols balco?" ?valorsPermesosBinari))
+
+    (printout t ?pBalco crlf)
 
     ;;Preguntar garatge
     (bind ?pGaratge FALSE)

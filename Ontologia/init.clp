@@ -3,7 +3,7 @@
   ?trigger <- (initial)
 	=>
 	(load "ProjectOntologyAprop.clp")
-  ;;(load "preguntasFunctions.clp")
+  (load "preguntasFunctions.clp")
   (load "printObjectesFuncions.clp")
   (load "inputRules.clp")
 )
