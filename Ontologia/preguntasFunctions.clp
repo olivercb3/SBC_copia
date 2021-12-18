@@ -107,7 +107,7 @@
 )
 
 (deffunction preguntaFlexible (?text $?valors-permesos)
-  (format t "%s (%s) " ?text (implode$ ?valors-serveis))
+  (format t "%s (%s) " ?text (implode$ ?valors-permesos))
   (printout t crlf)
   (bind ?r (read))
   (bind ?r (str-cat ?r))

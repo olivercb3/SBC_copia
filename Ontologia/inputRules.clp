@@ -32,7 +32,7 @@
 )
 
 
-(defrule PreguntasAlSolicitant
+(defrule PreguntesSolicitant
     ?trigger <- (preguntar)
     =>
 
@@ -51,8 +51,8 @@
             )
 
       else
-        (bind (?pPreuMax 100000)) ;;preu indiferent
-        (bind (?pPreuMaxFlexible 100000)) ;;preu indiferent
+        (bind ?pPreuMax 100000) ;;preu indiferent
+        (bind ?pPreuMaxFlexible 100000) ;;preu indiferent
     )
 
     ;;Preguntar preu minim
@@ -65,8 +65,8 @@
                 else (bind ?preuMinFlexible ?preuMin )
             )
       else
-        (bind (?preuMin 0)) ;;preu indiferent
-        (bind (?preuMinFlexible 0)) ;;preu indiferent
+        (bind ?pPreuMin 0) ;;preu indiferent
+        (bind ?pPreuMinFlexible 0) ;;preu indiferent
     )
 
     (bind ?llistaPositivaForta (create$))
@@ -83,10 +83,10 @@
               (if (eq (nth$ 1 ?pServei) 1)
                 then
                   (bind ?llargada (length$ ?llistaPositivaDebil))
-                  (bind ?llistaPositivaDebil (insert$ (?llargada + 1) (nth$ 2 ?pServei)))
+                  (bind ?llistaPositivaDebil (insert$ ?llistaPositivaDebil (+ ?llargada 1) (nth$ 2 ?pServei)))
                 else
                   (bind ?llargada (length$ ?llistaPositivaForta))
-                  (bind ?llistaPositivaForta (insert$ (?llargada + 1) (nth$ 2 ?pServei)))
+                  (bind ?llistaPositivaForta (insert$ ?llistaPositivaForta (+ ?llargada 1) (nth$ 2 ?pServei)))
               )
         )
     )
@@ -100,10 +100,10 @@
             (if (eq (nth$ 1 ?pServei) -1)
               then
                 (bind ?llargada (length$ ?llistaNegativaDebil))
-                (bind ?llistaNegativaDebil (insert$ (?llargada + 1) (nth$ 2 ?pServei)))
+                (bind ?llistaNegativaDebil (insert$ ?llistaNegativaDebil (+ ?llargada 1) (nth$ 2 ?pServei)))
               else
                 (bind ?llargada (length$ ?llistaNegativaForta))
-                (bind ?llistaNegativaForta (insert$ (?llargada + 1) (nth$ 2 ?pServei)))
+                (bind ?llistaNegativaForta (insert$ ?llistaNegativaForta (+ ?llargada 1) (nth$ 2 ?pServei)))
             )
         )
     )
@@ -113,24 +113,22 @@
     (retract ?trigger)
 
     (assert (car_solicitant
-        (edat)
-        (fills)
-        (personesGrans)
-        (numHab)
-        (habFlexible)
+        (edat 0)
+        (fills 0)
+        (personesGrans 0)
+        (numHab 0)
+        (habFlexible 0)
         (preuMaxim ?pPreuMax)
         (preuMaxFlexible ?pPreuMaxFlexible)
-        (preuMinim ?preuMin)
-        (preuMinimFlexible ?preuMinFlexible)
-        (superficieMax)
-        (superficieMaxFlex)
-        (superficieMinim)
-        (superficieMinimFlex)
-        (garatge)
-        (balco)
-        (mascota)
-        (llistaServeiPositiva ?llistaPositiu)
-        (llistaServeiNegativa ?llistaNegativa)
+        (preuMinim ?pPreuMin)
+        (preuMinimFlexible ?pPreuMinFlexible)
+        (superficieMax 0)
+        (superficieMaxFlex 0)
+        (superficieMinim 0)
+        (superficieMinimFlex 0)
+        (garatge 0)
+        (balco 0)
+        (mascota 0)
         (llistaServeiPositivaDebil ?llistaPositivaDebil)
         (llistaServeiNegativaDebil ?llistaNegativaDebil)
         (llistaServeiPositivaForta ?llistaPositivaForta)
@@ -141,7 +139,28 @@
 )
 
 (defrule buscarPossibles
-  ?carSolicitant <- ...
+  ?carSolicitant <- (car_solicitant
+        (edat ?edat)
+        (fills ?fills)
+        (personesGrans ?personesGrans)
+        (numHab ?numhab)
+        (habFlexible ?habflex)
+        (preuMaxim ?pPreuMax)
+        (preuMaxFlexible ?pPreuMaxFlexible)
+        (preuMinim ?pPreuMin)
+        (preuMinimFlexible ?pPreuMinFlexible)
+        (superficieMax ?pSupMax)
+        (superficieMaxFlex ?pSupMaxFlex)
+        (superficieMinim ?pSupMin)
+        (superficieMinimFlex ?pSupMinFlex)
+        (garatge ?pGaratge)
+        (balco ?pBalco)
+        (mascota ?pMascota)
+        (llistaServeiPositivaDebil ?llistaPositivaDebil)
+        (llistaServeiNegativaDebil ?llistaNegativaDebil)
+        (llistaServeiPositivaForta ?llistaPositivaForta)
+        (llistaServeiNegativaForta ?llistaNegativaForta)
+      )
   ?trigger <- (cercar)
   =>
   (printout t crlf)
@@ -153,49 +172,12 @@
     do
       (bind ?curr-obj (nth$ ?i ?vivendes))
       (bind ?acceptable (comprovarVivenda ?curr-obj ?carSolicitant))
-      (if ?acceptable
-        then
-          (puntuarVivendes ?carSolicitant ?curr-obj)
-      )
+      ;(if ?acceptable
+        ;then
+          ;(puntuarVivendes ?carSolicitant ?curr-obj)
+      ;)
   )
   (retract ?trigger)
   (retract ?carSolicitant)
   (assert (mostrar_resultats))
-)
-
-
-(defrule iibuscaPossibles
-    ?trigger <- (cercargjhg)
-    =>
-    (bind ?pPreu (send [CarInput] get-preu_solicitant))
-    (bind ?pBalco (send [CarInput] get-balco))
-    (bind ?pGaratge (send [CarInput] get-garatge))
-
-    (printout t crlf)
-  	(printout t "...Buscant vivendes..." crlf)
-  	(printout t crlf)
-
-    ;;Possibles vivendes
-
-    (bind $?vivendes (find-all-instances ((?ins Vivenda)) TRUE))
-    (bind ?n (length$ (find-all-instances ((?ins Car_Vivenda)) TRUE)))
-    ;;(printout t "Hi ha " ?n " vivendes" crlf)
-    (loop-for-count (?i 1 (length$ $?vivendes)) do
-
-	;;La instancia de vivenda que tractarem
-        ;;(printout t "Vivenda nº " ?i ": " crlf)
-	(bind ?curr-obj (nth$ ?i ?vivendes))
-
-        (bind ?c (send ?curr-obj get-te_car_vivenda))
-        (bind ?curr-preu (send ?c get-preu))
-        (bind ?curr-balco (if (eq (send ?c get-balco) "TRUE") then TRUE else FALSE))
-	(bind ?curr-garatge (if (eq (send ?c get-garatge) "TRUE") then TRUE else FALSE))
-
-        (if (and (<= ?curr-preu ?pPreu) (eq ?curr-balco ?pBalco) (eq ?curr-garatge ?pGaratge))
-          then (printVivenda ?curr-obj)
-	  else (printout t "La vivenda " ?curr-obj " no satisfa les teves especificacions" crlf)
-        )
-
-    )
-    (retract ?trigger)
 )

@@ -4,6 +4,7 @@
 	=>
 	(load "ProjectOntologyAprop.clp")
   (load "preguntasFunctions.clp")
+  (load "funcionsRestrictives.clp")
   (load "printObjectesFuncions.clp")
   (load "inputRules.clp")
 )
