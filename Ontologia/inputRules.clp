@@ -15,8 +15,10 @@
   (slot garatge (type INTEGER))
   (slot balco (type INTEGER))
   (slot mascota (type INTEGER))
-  (slot llistaServeiPositiva)
-  (slot llistaServeiNegativa)
+  (slot llistaServeiPositivaDebil)
+  (slot llistaServeiNegativaDebil)
+  (slot llistaServeiPositivaForta)
+  (slot llistaServeiNegativaForta)
 )
 
 (defrule main "Main"
@@ -39,17 +41,38 @@
     (bind ?valorsPermesosFlexible (create$ "si" "no" "indiferent"))
 
     ;;Preguntar preu max
-    (bind ?pFlexible (preguntaFlexible "Ets flexible en el preu?" ?valorsPermesosFlexible))   ;;retorna 1 si es flexible, -1 si no es flexible, 0 si el preu li es indiferent
+    (bind ?pFlexible (preguntaFlexible "Ets flexible en el preu maxim?" ?valorsPermesosFlexible))   ;;retorna 1 si es flexible, -1 si no es flexible, 0 si el preu li es indiferent
 
     (if (neq ?pFlexible 0)
       then (bind ?pPreuMax (preguntaInteger "Quin és el teu pressupost?" 1 10000))
-            (bind ?pPreuMax (preguntaInteger "A partir de quin preu minim consideraries la oferta viable?" 0 ?pPreuMax))
+            (if (eq ?pFlexible 1)
+                then (bind ?pPreuMaxFlexible ( round (* ?pPreuMax 1.2)) )
+                else (bind ?pPreuMaxFlexible ?pPreuMax )
+            )
+
       else
-        (bind (?pPreu 100000))
+        (bind (?pPreuMax 100000)) ;;preu indiferent
+        (bind (?pPreuMaxFlexible 100000)) ;;preu indiferent
     )
 
-    (bind ?llistaPositiu (create$))
-    (bind ?llistaNegativa (create$))
+    ;;Preguntar preu minim
+    (bind ?pFlexible (preguntaFlexible "Ets flexible en el preu minim?" ?valorsPermesosFlexible))   ;;retorna 1 si es flexible, -1 si no es flexible, 0 si el preu li es indiferent
+
+    (if (neq ?pFlexible 0)
+      then (bind ?preuMin (preguntaInteger "Quin és el teu pressupost minim?" 0 ?pPreuMax))
+            (if (eq ?pFlexible 1)
+                then (bind ?preuMinFlexible ( round (* ?preuMin 0.8)) )
+                else (bind ?preuMinFlexible ?preuMin )
+            )
+      else
+        (bind (?preuMin 0)) ;;preu indiferent
+        (bind (?preuMinFlexible 0)) ;;preu indiferent
+    )
+
+    (bind ?llistaPositivaForta (create$))
+    (bind ?llistaPositivaDebil (create$))
+    (bind ?llistaNegativaForta (create$))
+    (bind ?llistaNegativaDebil (create$))
 
     (while TRUE
       do
@@ -57,9 +80,14 @@
         (if (eq (nth$ 1 ?pServei) 0)
           then (break)
           else
-              (bind ?llargada (length$ ?llistaPositiu))
-              (bind ?llistaPositiu (insert$ (?llargada + 1) (nth$ 1 ?pServei)))
-              (bind ?llistaPositiu (insert$ (?llargada + 2) (nth$ 2 ?pServei)))
+              (if (eq (nth$ 1 ?pServei) 1)
+                then
+                  (bind ?llargada (length$ ?llistaPositivaDebil))
+                  (bind ?llistaPositivaDebil (insert$ (?llargada + 1) (nth$ 2 ?pServei)))
+                else
+                  (bind ?llargada (length$ ?llistaPositivaForta))
+                  (bind ?llistaPositivaForta (insert$ (?llargada + 1) (nth$ 2 ?pServei)))
+              )
         )
     )
 
@@ -69,9 +97,14 @@
         (if (eq (nth$ 1 ?pServei) 0)
           then (break)
           else
-              (bind ?llargada (length$ ?llistaNegativa))
-              (bind ?llistaNegativa (insert$ (?llargada + 1) (nth$ 1 ?pServei)))
-              (bind ?llistaNegativa (insert$ (?llargada + 2) (nth$ 2 ?pServei)))
+            (if (eq (nth$ 1 ?pServei) -1)
+              then
+                (bind ?llargada (length$ ?llistaNegativaDebil))
+                (bind ?llistaNegativaDebil (insert$ (?llargada + 1) (nth$ 2 ?pServei)))
+              else
+                (bind ?llargada (length$ ?llistaNegativaForta))
+                (bind ?llistaNegativaForta (insert$ (?llargada + 1) (nth$ 2 ?pServei)))
+            )
         )
     )
 
@@ -85,10 +118,10 @@
         (personesGrans)
         (numHab)
         (habFlexible)
-        (preuMaxim)
-        (preuMaxFlexible)
-        (preuMinim)
-        (preuMinimFlexible)
+        (preuMaxim ?pPreuMax)
+        (preuMaxFlexible ?pPreuMaxFlexible)
+        (preuMinim ?preuMin)
+        (preuMinimFlexible ?preuMinFlexible)
         (superficieMax)
         (superficieMaxFlex)
         (superficieMinim)
@@ -98,6 +131,10 @@
         (mascota)
         (llistaServeiPositiva ?llistaPositiu)
         (llistaServeiNegativa ?llistaNegativa)
+        (llistaServeiPositivaDebil ?llistaPositivaDebil)
+        (llistaServeiNegativaDebil ?llistaNegativaDebil)
+        (llistaServeiPositivaForta ?llistaPositivaForta)
+        (llistaServeiNegativaForta ?llistaNegativaForta)
       )
     )
     (assert (cercar))
@@ -115,22 +152,20 @@
   (loop-for-count (?i 1 (length$ $?vivendes))
     do
       (bind ?curr-obj (nth$ ?i ?vivendes))
-      (bind ?c (send ?curr-obj get-te_car_vivenda))
-
-      (bind ?puntuacio 0)
-
-      (bind ?llistadolenta (create$))
-      (bind ?llistabona (create$))
-
-      (bind ?curr-preu (send ?c get-preu))
-
-      ;;filtrar per restriccions fortes
+      (bind ?acceptable (comprovarVivenda ?curr-obj ?carSolicitant))
+      (if ?acceptable
+        then
+          (puntuarVivendes ?carSolicitant ?curr-obj)
+      )
   )
+  (retract ?trigger)
+  (retract ?carSolicitant)
+  (assert (mostrar_resultats))
 )
 
 
-(defrule buscaPossibles
-    ?trigger <- (cercar)
+(defrule iibuscaPossibles
+    ?trigger <- (cercargjhg)
     =>
     (bind ?pPreu (send [CarInput] get-preu_solicitant))
     (bind ?pBalco (send [CarInput] get-balco))
