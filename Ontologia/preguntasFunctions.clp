@@ -32,6 +32,68 @@
     ?resp
 )
 
+;; Pregunta serveis positiva
+(deffunction preguntaServeisPositiva (?text $?valors-serveis)
+  (format t "%s (%s) " ?text (implode$ ?valors-serveis))
+  (printout t crlf)
+  (bind ?r (readline))
+  (bind ?r (str-cat ?r))
+  (bind ?resp (explode$ ?r))
+  (while TRUE
+    do
+    (bind ?op1 (lowcase (nth$ 1 ?resp)))
+    (if (eq ?op1 indiferent)
+      then (return (create$ 0 null))
+    )
+    (if (member$ ?op1 ?valors-serveis)
+      then (return (create$ 1 ?op1))
+    )
+    (if (> (length$ ?resp) 1)
+      then
+        (bind ?op2 (lowcase (nth$ 2 ?resp)))
+        (if (and (member$ ?op2 ?valors-serveis) (eq ?op1 segur))
+          then (return (create$ 2 ?op2))
+        )
+    )
+    (printout t ?text crlf)
+    (bind ?r (readline))
+    (bind ?r (str-cat ?r))
+    (bind ?resp (explode$ ?r))
+  )
+  (return (create$ 0 null))
+)
+
+;; Pregunta serveis negativa
+(deffunction preguntaServeisNegativa (?text $?valors-serveis)
+  (format t "%s (%s) " ?text (implode$ ?valors-serveis))
+  (printout t crlf)
+  (bind ?r (readline))
+  (bind ?r (str-cat ?r))
+  (bind ?resp (explode$ ?r))
+  (while TRUE
+    do
+    (bind ?op1 (lowcase (nth$ 1 ?resp)))
+    (if (eq ?op1 indiferent)
+      then (return (create$ 0 null))
+    )
+    (if (member$ ?op1 ?valors-serveis)
+      then (return (create$ -1 ?op1))
+    )
+    (if (> (length$ ?resp) 1)
+      then
+        (bind ?op2 (lowcase (nth$ 2 ?resp)))
+        (if (and (member$ ?op2 ?valors-serveis) (eq ?op1 segur))
+          then (return (create$ -2 ?op2))
+        )
+    )
+    (printout t ?text crlf)
+    (bind ?r (readline))
+    (bind ?r (str-cat ?r))
+    (bind ?resp (explode$ ?r))
+  )
+  (return (create$ 0 null))
+)
+
 ;;; Pregunta per un integer
 (deffunction preguntaInteger (?text ?min ?max)
 	(printout t crlf)
@@ -44,29 +106,24 @@
 	?r
 )
 
-
-;; Pregunta integer bis
-(deffunction preguntaIntegerBis (?text ?min ?max)
-	(format t "%s" ?text)
+(deffunction preguntaFlexible (?text $?valors-permesos)
+  (format t "%s (%s) " ?text (implode$ ?valors-serveis))
   (printout t crlf)
-	(bind ?r (readline))
-  (bind ?resp (explode$ ?r))
-
-  (printout t (nth$ 1 ?resp))
-
-  (while (or(and(> (length$ ?resp) 1)(neq (lowcase (nth$ 1 ?resp)) segur)(>= (integer(nth$ 2 ?resp)) ?min)(<= (integer(nth$ 2 ?resp)) ?max)) (and(< (length$ ?resp) 1)(neq (lowcase (nth$ 1 ?resp)) indiferent)) (and(= (length$ ?resp) 1)(>= (integer(nth$ 1 ?resp)) ?min)(<= (integer(nth$ 2 ?resp)) ?max)))
-    do
-    (format t "%s (opcions: segur seguit d'un numero, numero o indiferent)" ?text)
+  (bind ?r (read))
+  (bind ?r (str-cat ?r))
+  (while (not (member$ (lowcase ?r) ?valors-permesos)) do
+    (format t "%s (%s) " ?text (implode$ ?valors-permesos))
     (printout t crlf)
     (bind ?r (readline))
-    (bind ?resp (explode$ ?r))
+  )
+  (if (eq (str-compare "si" ?r) 0)
+    then (bind ?resp 1)
+    else
+      (if (eq (str-compare "no" ?r) 0)
+        then (bind ?resp -1)
+        else
+          (bind ?resp 0)
+      )
   )
   ?resp
-)
-
-;;; Pregunta de qualsevol tipus
-(deffunction preguntaVariable (?text)
-	(format t "%s" ?text)
-	(bind ?r (read))
-  ?r
 )
