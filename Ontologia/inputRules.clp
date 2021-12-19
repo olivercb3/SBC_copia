@@ -174,7 +174,7 @@
       (bind ?acceptable (comprovarVivenda ?curr-obj ?carSolicitant))
       ;(if ?acceptable
         ;then
-          ;(puntuarVivendes ?carSolicitant ?curr-obj)
+          ;(puntuarVivenda ?carSolicitant ?curr-obj)
       ;)
   )
   (retract ?trigger)
