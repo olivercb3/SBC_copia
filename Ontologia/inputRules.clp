@@ -38,6 +38,7 @@
 
     (bind ?valorsPermesosBinari (create$ "segur si" "si" "indiferent" "no" "segur no"))
     (bind ?valorsPermesosServei (create$ "centresalut" "escoles" "hipermercats" "supermercats" "oci" "transportpublic" "zonesverdes"))
+    (bind ?valorsPermesosServeiSegur (create$ "segur centresalut" "segur escoles" "segur hipermercats" "segur supermercats" "segur oci" "segur transportpublic" "segur zonesverdes"))
     (bind ?valorsPermesosFlexible (create$ "si" "no" "indiferent"))
 
     (bind ?pEdat (preguntaIntegerUnbound "Quina edat tens?"))
@@ -102,6 +103,26 @@
         (bind ?pSupMinFlexible 15) ;superficie indiferent
     )
 
+    ;Preguntar habitacions
+    (bind ?pFlexible (preguntaFlexible "Ets flexible amb el nombre d'habitacions?" ?valorsPermesosFlexible))   ;retorna 1 si es flexible, -1 si no es flexible, 0 si el preu li es indiferent
+
+    (if (neq ?pFlexible 0)
+      then (bind ?pHab (preguntaInteger "Quin nombre d'habitacions vols?" 0 20))
+            (if (eq ?pFlexible 1)
+                then (bind ?pHabFlexible (- ?pHab 1)
+                else (bind ?pHabFlexible ?pHab)
+            )
+      else
+        (bind ?pHab 0) ;habitacions indiferent
+        (bind ?pHabFlexible 0) ;habitacions indiferent
+    )
+
+    (bind ?pBalco (preguntaBinariaBis "Vols balco?" ?valorsPermesosBinari))
+
+    (bind ?pGaratge (preguntaBinariaBis "Vols garatge?" ?valorsPermesosBinari))
+
+    (bind ?pMascota (preguntaBinariaBis "Vols que el pis permeti mascotes?" ?valorsPermesosBinari))
+
     (bind ?llistaPositivaForta (create$))
     (bind ?llistaPositivaDebil (create$))
     (bind ?llistaNegativaForta (create$))
@@ -109,7 +130,8 @@
 
     (while TRUE
       do
-        (bind ?pServei (preguntaServeisPositiva "Necessites algun servei a prop?" ?valorsPermesosServei))
+        (bind ?pServei (preguntaServeisPositiva "Necessites algun servei a prop?"))
+        (printout t ?pServei crlf)
         (if (eq (nth$ 1 ?pServei) 0)
           then (break)
           else
@@ -126,7 +148,8 @@
 
     (while TRUE
       do
-        (bind ?pServei (preguntaServeisNegativa "No vols algun servei a prop?" ?valorsPermesosServei))
+        (bind ?pServei (preguntaServeisNegativa "No vols algun servei a prop?"))
+        (printout t ?pServei crlf)
         (if (eq (nth$ 1 ?pServei) 0)
           then (break)
           else
@@ -149,8 +172,8 @@
         (edat ?pEdat)
         (fills ?pFills)
         (personesGrans ?pGrans)
-        (numHab 0)
-        (habFlexible 0)
+        (numHab ?pHab)
+        (habFlexible ?pHabFlexible)
         (preuMaxim ?pPreuMax)
         (preuMaxFlexible ?pPreuMaxFlexible)
         (preuMinim ?pPreuMin)
@@ -159,9 +182,9 @@
         (superficieMaxFlex ?pSupMaxFlexible)
         (superficieMinim ?pSupMin)
         (superficieMinimFlex ?pSupMinFlexible)
-        (garatge 0)
-        (balco 0)
-        (mascota 0)
+        (garatge ?pGaratge)         ;aquestes tres: garatge, balco i mascota retornen 2->segur volen 1->prefereixen 0->indiferent -1->prefereixen que no -2-> segur no
+        (balco ?pBalco)
+        (mascota ?pMascota)
         (llistaServeiPositivaDebil ?llistaPositivaDebil)
         (llistaServeiNegativaDebil ?llistaNegativaDebil)
         (llistaServeiPositivaForta ?llistaPositivaForta)
@@ -216,7 +239,7 @@
 						    ?llistaNegativaForta))
       (if ?acceptable
         then
-          (bind ?puntuacioVivenda (puntuarVivenda ?curr-obj ?edat
+          (bind ?resultat (puntuarVivenda ?curr-obj ?edat
 							    ?fills
 							    ?personesGrans
 							    ?habflex
@@ -229,8 +252,9 @@
 							    ?pMascota
 							    ?llistaPositivaDebil
 							    ?llistaNegativaDebil))
-	  (printout t ?puntuacioVivenda crlf)
-          (if (> ?puntuacioVivenda 0) then (printVivenda ?curr-obj))
+
+                  (printout t ?resultat crlf)
+          ;(if (> ?resultat 0) then (printVivenda ?curr-obj))
       )
   )
   (retract ?trigger)

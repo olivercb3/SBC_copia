@@ -20,3 +20,8 @@
     (printout t "Preu: " ?preu crlf)
     (printout t "Superficie: "   ?superficie crlf)
 )
+
+(deffunction printServei (?s)
+    (printout t "Servei: " crlf)
+    (printout t (instance-name ?s) crlf)
+)

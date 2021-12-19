@@ -8,23 +8,23 @@
 
 (deffunction acceptableServei (?valorSol ?serveiViv)
     (switch ?valorSol
-        (case oci then return (eq (type ?serveiViv) Oci))
-        (case zonesverdes then return (eq (type ?serveiViv) ZonesVerdes))
-        (case centresalut then return (eq (type ?serveiViv) CentreSalut))
-        (case transportpublic then return (eq (type ?serveiViv) TransportPublic))
-        (case escoles then return (eq (type ?serveiViv) Escoles))
-        (case supermercats then return (eq (type ?serveiViv) SuperMercats))
-        (case hipermercats then return (eq (type ?serveiViv)g Hipermercats))
+        (case "oci" then (return (eq (type ?serveiViv) Oci)))
+        (case "zonesverdes" then (return (eq (type ?serveiViv) ZonesVerdes)))
+        (case "centresalut" then (return (eq (type ?serveiViv) CentreSalut)))
+        (case "transportpublic" then (return (eq (type ?serveiViv) TransportPublic)))
+        (case "escoles" then (return (eq (type ?serveiViv) Escoles)))
+        (case "supermercats" then (return (eq (type ?serveiViv) SuperMercats)))
+        (case "hipermercats" then (return (eq (type ?serveiViv)g Hipermercats)))
     )
 )
 
 (deffunction acceptableBinari (?valorSol ?valorVivenda)
     (switch ?valorSol
-        (case 0 then return TRUE)
-        (case 1 then return TRUE)
-        (case 2 then return ?valorVivenda)
-        (case -1 then return TRUE)
-        (case -2 then return (not ?valorVivenda))
+        (case 0 then (return TRUE))
+        (case 1 then (return TRUE))
+        (case 2 then (return ?valorVivenda))
+        (case -1 then (return TRUE))
+        (case -2 then (return (not ?valorVivenda)))
     )
 )
 
@@ -131,9 +131,11 @@
 				      ?pGaratge
 				      ?pBalco
 				      ?pMascota
-				      ?llistaPositivaDebil
-				      ?llistaNegativaDebil)
+				      ?pllistaPositivaDebil
+				      ?pllistaNegativaDebil)
     (bind ?c (send ?vivenda get-te_car_vivenda))
+
+    (bind ?justificacions (create$))
 
     ;mirem restriccions debils
 
@@ -146,16 +148,40 @@
     (if (or (> ?superficie ?pSupMax) (< ?superficie ?pSupMin)) then (bind ?puntuacio (- ?puntuacio 50)))
 
     (bind $?serveis (send ?vivenda get-esta_a_prop))
-
-    (loop-for-count (?i 1 (length$ $?llistaPositivaDebil))
-	(if (not (member$ (nth$ ?i ?llistaPositivaDebil) $?serveis)) then (bind ?puntuacio (- ?puntuacio 50)))
-	(if (< ?puntuacio 0) then (return ?puntuacio))
+    (loop-for-count (?i 1 (length$ $?pllistaPositivaDebil))
+        (bind ?curr-servei (nth$ ?i ?pllistaPositivaDebil))
+        (bind ?found FALSE)
+        (loop-for-count (?i 1 (length$ $?serveis))
+            (bind ?serveiViv (nth$ ?i ?serveis))
+            (bind ?found (acceptableServei ?curr-servei ?serveiViv))
+            (if ?found then (break))
+        )
+        ;;s'ha trobat el servei?
+        (if (not ?found)
+          then
+            (bind ?puntuacio (- ?puntuacio 50))
+            (bind ?index (+ (length$ ?justificacions) 1))
+            (bind ?justificacions (insert$ ?justificacions ?index "No te un servei de preferencia"))
+        )
     )
 
-    (loop-for-count (?i 1 (length$ $?llistaNegativaDebil))
-	(if (member$ (nth$ ?i ?llistaNegativaDebil) $?serveis) then (bind ?puntuacio (- ?puntuacio 50)))
-	(if (< ?puntuacio 0) then (return ?puntuacio))
+    (if (< ?puntuacio 0) then (return -50))
+
+    (loop-for-count (?i 1 (length$ $?pllistaNegativaDebil))
+        (bind ?curr-servei (nth$ ?i ?pllistaNegativaDebil))
+        (bind ?found FALSE)
+        (loop-for-count (?i 1 (length$ $?serveis))
+            (bind ?serveiViv (nth$ ?i ?serveis))
+            (bind ?found (acceptableServei ?curr-servei ?serveiViv))
+            (if ?found then (break))
+        )
+        ;;s'ha trobat el servei?
+        (if ?found
+          then (bind ?puntuacio (- ?puntuacio 50))
+        )
     )
+
+    (if (< ?puntuacio 0) then (return -50))
 
     (bind ?balco (send ?c get-balco))
     (if (and (not ?balco) (eq ?pBalco 1)) then (bind ?puntuacio (- ?puntuacio 50))
@@ -172,5 +198,6 @@
     else (if (and ?mascota (eq ?pMascota -1)) then (bind ?puntuacio (- ?puntuacio 50))))
     (if (< ?puntuacio 0) then (return ?puntuacio))
 
-    (return ?puntuacio)
+    (bind ?justificacions (insert$ ?justificacions 1 ?puntuacio))
+    (return ?justificacions)
 )
