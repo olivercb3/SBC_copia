@@ -3,7 +3,7 @@
 )
 
 (deffunction acceptableSingleInteger (?valor ?esperat)
-  ( return ( eq ?valor ?esperat ))
+  ( return (or (eq ?valor 0) (eq ?valor ?esperat )))
 )
 
 (deffunction acceptableServei (?valorSol ?serveiViv)
@@ -28,7 +28,16 @@
     )
 )
 
-(deffunction comprovarVivenda (?vivenda ?solicitud)
+(deffunction comprovarVivenda (?vivenda ?pnumHab
+					?pPreuMax
+					?pPreuMin
+					?pSupMax
+					?pSupMin
+					?pgaratge
+					?pbalco
+					?pmascota
+					?pllistaPositivaForta
+					?pllistaNegativaForta)
 
     (bind ?res TRUE)
 
@@ -36,66 +45,51 @@
 
     ;;preu
     (bind ?preu (send ?c get-preu))
-    (bind ?res (acceptableInteger ?preu (send ?solicitud get-preuMaxim) (send ?solicitud get-preuMinim)))
+    (bind ?res (acceptableInteger ?preu ?pPreuMax ?pPreuMin))
     (if (not ?res)
-      then return FALSE
+	then return FALSE
     )
 
     ;;superficie
     (bind ?superficie (send ?c get-superficie))
-    (bind ?res (acceptableInteger ?superficie (send ?solicitud get-superficieMax) (send ?solicitud get-superficieMinim)))
+    (bind ?res (acceptableInteger ?superficie ?pSupMax ?pSupMin))
     (if (not ?res)
-      then return FALSE
+	then return FALSE
     )
 
     ;;numhab
     (bind ?numHab (send ?c get-num_dormitoris))
-    (bind ?res (acceptableSingleInteger ?numHab (send ?solicitud get-numHab)))
+    (bind ?res (acceptableSingleInteger ?pnumHab ?numHab))
     (if (not ?res)
-      then return FALSE
+	then return FALSE
     )
 
 
     ;;mascota
     (bind ?mascota (send ?c get-mascota))
-    (bind ?res (acceptableBinari (send ?solicitud get-mascota) ?mascota))
+    (bind ?res (acceptableBinari ?pmascota ?mascota))
     (if (not ?res)
-      then return FALSE
+	then return FALSE
     )
 
     ;;balco
     (bind ?balco (send ?c get-balco))
-    (bind ?res (acceptableBinari (send ?solicitud get-balco) ?balco))
+    (bind ?res (acceptableBinari ?pbalco ?balco))
     (if (not ?res)
-      then return FALSE
+	then return FALSE
     )
 
     ;;garatge
     (bind ?garatge (send ?c get-garatge))
-    (bind ?res (acceptableBinari (send ?solicitud get-garatge) ?garatge))
+    (bind ?res (acceptableBinari ?pgaratge ?garatge))
     (if (not ?res)
-      then return FALSE
+	then return FALSE
     )
 
     ;;Serveis Positius
     (bind $?serveis (send ?vivenda get-esta_a_prop))
-    (bind $?llistaPositivaForta (send ?solicitud get-llistaServeiPositivaForta))
-    (loop-for-count (?i 1 (length$ $?llistaPositivaForta))
-        (bind ?curr-servei (nth$ ?i ?llistaPositivaForta))
-        (bind ?found FALSE)
-        (loop-for-count (?i 1 (length$ $?serveis))
-            (bind ?serveiViv (nth$ ?i ?serveis))
-            (bind ?found (acceptableServei ?curr-servei ?serveiViv))
-            (if ?found then (break))
-        )
-        ;;s'ha trobat el servei?
-        (if (not ?found)
-          then return FALSE
-        )
-    )
-    (bind $?llistaPositivaDebil (send ?solicitud get-llistaPositivaDebil))
-    (loop-for-count (?i 1 (length$ $?llistaPositivaDebil))
-        (bind ?curr-servei (nth$ ?i ?llistaPositivaDebil))
+    (loop-for-count (?i 1 (length$ $?pllistaPositivaForta))
+        (bind ?curr-servei (nth$ ?i ?pllistaPositivaForta))
         (bind ?found FALSE)
         (loop-for-count (?i 1 (length$ $?serveis))
             (bind ?serveiViv (nth$ ?i ?serveis))
@@ -109,9 +103,8 @@
     )
 
     ;;Serveis Negatius
-    (bind $?llistaServeiNegativaForta (send ?solicitud get-llistaServeiNegativaForta))
-    (loop-for-count (?i 1 (length$ $?llistaServeiNegativaForta))
-        (bind ?curr-servei (nth$ ?i ?llistaServeiNegativaForta))
+    (loop-for-count (?i 1 (length$ $?pllistaNegativaForta))
+        (bind ?curr-servei (nth$ ?i ?pllistaNegativaForta))
         (bind ?found FALSE)
         (loop-for-count (?i 1 (length$ $?serveis))
             (bind ?serveiViv (nth$ ?i ?serveis))
@@ -123,58 +116,61 @@
           then return FALSE
         )
     )
-    (bind $?llistaServeiNegativaDebil (send ?solicitud get-llistaServeiNegativaDebil))
-    (loop-for-count (?i 1 (length$ $?llistaServeiNegativaDebil))
-        (bind ?curr-servei (nth$ ?i ?llistaServeiNegativaDebil))
-        (bind ?found FALSE)
-        (loop-for-count (?i 1 (length$ $?serveis))
-            (bind ?serveiViv (nth$ ?i ?serveis))
-            (bind ?found (acceptableServei ?curr-servei ?serveiViv))
-            (if ?found then (break))
-        )
-        ;;s'ha trobat el servei?
-        (if ?found
-          then return FALSE
-        )
-    )
+
+    (return TRUE)
 )
 
-(deffunction puntuarVivenda (?solicitud ?vivenda)
-    (bind ?puntuacio 100)
+(deffunction puntuarVivenda (?vivenda ?edat
+				      ?fills
+				      ?personesGrans
+				      ?habflex
+				      ?pPreuMaxFlex
+				      ?pPreuMinFlex
+				      ?pSupMaxFlex
+				      ?pSupMinFlex
+				      ?pGaratge
+				      ?pBalco
+				      ?pMascota
+				      ?llistaPositivaDebil
+				      ?llistaNegativaDebil)
     (bind ?c (send ?vivenda get-te_car_vivenda))
 
-    ;mirem restriccions fortes
+    ;mirem restriccions debils
+
+    (bind ?puntuacio 100)
 
     (bind ?preu (send ?c get-preu))
-    (if (and (> ?preu (send ?solicitud get-preuMaxim)) (< ?preu (send ?solicitud get-preuMinim))) then return -100)
+    (if (and (> ?preu ?pPreuMaxFlex) (< ?preu ?pPreuMinFlex)) then (bind ?puntuacio (- ?puntuacio 50)))
 
     (bind ?superficie (send ?c get-superficie))
-    (if (and (> ?superficie (send ?solicitud get-superficieMax)) (< ?superficie (send ?solicitud get-superficieMinim))) then return -100)
+    (if (and (> ?superficie ?pSupMaxFlex) (< ?superficie ?pSupMinFlex)) then (bind ?puntuacio (- ?puntuacio 50)))
 
     (bind $?serveis (send ?vivenda get-esta_a_prop))
 
-    (bind $?llistaPositivaForta (send ?solicitud get-llistaServeiPositivaForta))
-    (loop-for-count (?i 1 (length$ $?llistaPositivaForta))
-	(if (not (member$ (nth$ ?i ?llistaPositivaForta) $?serveis)) then return -100)
+    (loop-for-count (?i 1 (length$ $?llistaPositivaDebil))
+	(if (not (member$ (nth$ ?i ?llistaPositivaDebil) $?serveis)) then (bind ?puntuacio (- ?puntuacio 50)))
+	(if (< ?puntuacio 0) then return ?puntuacio)
     )
 
-    (bind $?llistaNegativaForta (send ?solicitud get-llistaServeiNegativaForta))
-    (loop-for-count (?i 1 (length$ $?llistaNegativaForta))
-	(if (member$ (nth$ ?i ?llistaNegativaForta) $?serveis) then return -100)
+    (loop-for-count (?i 1 (length$ $?llistaNegativaDebil))
+	(if (member$ (nth$ ?i ?llistaNegativaDebil) $?serveis) then (bind ?puntuacio (- ?puntuacio 50)))
+	(if (< ?puntuacio 0) then return ?puntuacio)
     )
 
     (bind ?balco (send ?c get-balco))
-    (bind ?sBalco (send ?solicitud get-balco))
-    (if (and (not ?balco) (eq ?sBalco 2)) then return -100)
-    (if (and ?balco (eq ?sBalco -2)) then return -100)
+    (if (and (not ?balco) (eq ?pBalco 1)) then (bind ?puntuacio (- ?puntuacio 50))
+    else (if (and ?balco (eq ?pBalco -1)) then (bind ?puntuacio (- ?puntuacio 50))))
+    (if (< ?puntuacio 0) then return ?puntuacio)
 
     (bind ?garatge (send ?c get-garatge))
-    (bind ?sGaratge (send ?solicitud get-garatge))
-    (if (and (not ?garatge) (eq ?sGaratge 2)) then return -100)
-    (if (and ?garatge (eq ?sGaratge -2)) then return -100)
+    (if (and (not ?garatge) (eq ?pGaratge 1)) then (bind ?puntuacio (- ?puntuacio 50))
+    else (if (and ?garatge (eq ?pGaratge -1)) then (bind ?puntuacio (- ?puntuacio 50))))
+    (if (< ?puntuacio 0) then return ?puntuacio)
 
     (bind ?mascota (send ?c get-mascota))
-    (bind ?sMascota (send ?solicitud get-mascota))
-    (if (and (not ?mascota) (eq ?sMascota 2)) then return -100)
-    (if (and ?mascota (eq ?sMascota -2)) then return -100)
+    (if (and (not ?mascota) (eq ?pMascota 1)) then (bind ?puntuacio (- ?puntuacio 50))
+    else (if (and ?mascota (eq ?pMascota -1)) then (bind ?puntuacio (- ?puntuacio 50))))
+    (if (< ?puntuacio 0) then return ?puntuacio)
+
+    (return ?puntuacio)
 )

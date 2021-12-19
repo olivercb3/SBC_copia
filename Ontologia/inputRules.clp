@@ -15,10 +15,10 @@
   (slot garatge (type INTEGER))
   (slot balco (type INTEGER))
   (slot mascota (type INTEGER))
-  (slot llistaServeiPositivaDebil)
-  (slot llistaServeiNegativaDebil)
-  (slot llistaServeiPositivaForta)
-  (slot llistaServeiNegativaForta)
+  (multislot llistaServeiPositivaDebil)
+  (multislot llistaServeiNegativaDebil)
+  (multislot llistaServeiPositivaForta)
+  (multislot llistaServeiNegativaForta)
 )
 
 (defrule main "Main"
@@ -122,8 +122,8 @@
         (preuMaxFlexible ?pPreuMaxFlexible)
         (preuMinim ?pPreuMin)
         (preuMinimFlexible ?pPreuMinFlexible)
-        (superficieMax 0)
-        (superficieMaxFlex 0)
+        (superficieMax 10000)
+        (superficieMaxFlex 10000)
         (superficieMinim 0)
         (superficieMinimFlex 0)
         (garatge 0)
@@ -146,9 +146,9 @@
         (numHab ?numhab)
         (habFlexible ?habflex)
         (preuMaxim ?pPreuMax)
-        (preuMaxFlexible ?pPreuMaxFlexible)
+        (preuMaxFlexible ?pPreuMaxFlex)
         (preuMinim ?pPreuMin)
-        (preuMinimFlexible ?pPreuMinFlexible)
+        (preuMinimFlexible ?pPreuMinFlex)
         (superficieMax ?pSupMax)
         (superficieMaxFlex ?pSupMaxFlex)
         (superficieMinim ?pSupMin)
@@ -156,10 +156,10 @@
         (garatge ?pGaratge)
         (balco ?pBalco)
         (mascota ?pMascota)
-        (llistaServeiPositivaDebil ?llistaPositivaDebil)
-        (llistaServeiNegativaDebil ?llistaNegativaDebil)
-        (llistaServeiPositivaForta ?llistaPositivaForta)
-        (llistaServeiNegativaForta ?llistaNegativaForta)
+        (llistaServeiPositivaDebil $?llistaPositivaDebil)
+        (llistaServeiNegativaDebil $?llistaNegativaDebil)
+        (llistaServeiPositivaForta $?llistaPositivaForta)
+        (llistaServeiNegativaForta $?llistaNegativaForta)
       )
   ?trigger <- (cercar)
   =>
@@ -171,11 +171,33 @@
   (loop-for-count (?i 1 (length$ $?vivendes))
     do
       (bind ?curr-obj (nth$ ?i ?vivendes))
-      (bind ?acceptable (comprovarVivenda ?curr-obj ?carSolicitant))
-      ;(if ?acceptable
-        ;then
-          ;(puntuarVivenda ?carSolicitant ?curr-obj)
-      ;)
+      (bind ?acceptable (comprovarVivenda ?curr-obj ?numhab
+						    ?pPreuMax
+						    ?pPreuMin
+						    ?pSupMax
+						    ?pSupMin
+						    ?pGaratge
+						    ?pBalco
+						    ?pMascota
+						    ?llistaPositivaForta
+						    ?llistaNegativaForta))
+      (if ?acceptable
+        then
+          (bind ?puntuacioVivenda (puntuarVivenda ?curr-obj ?edat
+							    ?fills
+							    ?personesGrans
+							    ?habflex
+							    ?pPreuMaxFlex
+							    ?pPreuMinFlex
+							    ?pSupMaxFlex
+							    ?pSupMinFlex
+							    ?pGaratge
+							    ?pBalco
+							    ?pMascota
+							    ?llistaPositivaDebil
+							    ?llistaNegativaDebil))
+          (if (> ?puntuacioVivenda 0) then (printVivenda ?curr-obj))
+      )
   )
   (retract ?trigger)
   (retract ?carSolicitant)
