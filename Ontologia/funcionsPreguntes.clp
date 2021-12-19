@@ -34,6 +34,7 @@
 
 ;; Pregunta serveis positiva
 (deffunction preguntaServeisPositiva (?text $?valors-serveis)
+  (printout t crlf)
   (format t "%s (%s) " ?text (implode$ ?valors-serveis))
   (printout t crlf)
   (bind ?r (readline))
@@ -65,6 +66,7 @@
 
 ;; Pregunta serveis negativa
 (deffunction preguntaServeisNegativa (?text $?valors-serveis)
+  (printout t crlf)
   (format t "%s (%s) " ?text (implode$ ?valors-serveis))
   (printout t crlf)
   (bind ?r (readline))
@@ -100,13 +102,25 @@
 	(printout t ?text crlf)
 	(bind ?r (read))
 	(while (not(and(>= ?r ?min)(<= ?r ?max))) do
-    (printout t "Numero invalid a de estar entre " ?min " i " ?max crlf)
+    (printout t "Numero invalid; ha d'estar entre " ?min " i " ?max crlf)
+		(bind ?r (read))
+	)
+	?r
+)
+
+(deffunction preguntaIntegerUnbound (?text)
+	(printout t crlf)
+	(printout t ?text crlf)
+	(bind ?r (read))
+	(while (not (and (integerp ?r) (>= ?r 0))) do
+    		(printout t "Introdueix un número positiu" crlf)
 		(bind ?r (read))
 	)
 	?r
 )
 
 (deffunction preguntaFlexible (?text $?valors-permesos)
+  (printout t crlf)
   (format t "%s (%s) " ?text (implode$ ?valors-permesos))
   (printout t crlf)
   (bind ?r (read))

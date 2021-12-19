@@ -6,7 +6,7 @@
   (slot habFlexible (type INTEGER))
   (slot preuMaxim (type INTEGER))
   (slot preuMaxFlexible (type INTEGER))
-  (slot preuMinim (type INTEGER))   ;;debil
+  (slot preuMinim (type INTEGER))   ;debil
   (slot preuMinimFlexible (type INTEGER))
   (slot superficieMax (type INTEGER))
   (slot superficieMaxFlex (type INTEGER))
@@ -22,7 +22,7 @@
 )
 
 (defrule main "Main"
-  ;;hauria de ser amb initial-fact pero no sabem com es fa
+  ;hauria de ser amb initial-fact pero no sabem com es fa
   ?trigger <- (initial-main)
 	=>
 	(reset)
@@ -40,33 +40,66 @@
     (bind ?valorsPermesosServei (create$ "centresalut" "escoles" "hipermercats" "supermercats" "oci" "transportpublic" "zonesverdes"))
     (bind ?valorsPermesosFlexible (create$ "si" "no" "indiferent"))
 
-    ;;Preguntar preu max
-    (bind ?pFlexible (preguntaFlexible "Ets flexible en el preu maxim?" ?valorsPermesosFlexible))   ;;retorna 1 si es flexible, -1 si no es flexible, 0 si el preu li es indiferent
+    (bind ?pEdat (preguntaIntegerUnbound "Quina edat tens?"))
+    (bind ?pFills (preguntaIntegerUnbound "Quants fills tens o planeges tenir en un futur proper?"))
+    (bind ?pGrans (preguntaIntegerUnbound "Quantes persones grans tens al teu carrec?"))
+
+    ;Preguntar preu max
+    (bind ?pFlexible (preguntaFlexible "Ets flexible amb el preu maxim?" ?valorsPermesosFlexible))   ;retorna 1 si es flexible, -1 si no es flexible, 0 si el preu li es indiferent
 
     (if (neq ?pFlexible 0)
-      then (bind ?pPreuMax (preguntaInteger "Quin és el teu pressupost?" 1 10000))
+      then (bind ?pPreuMax (preguntaInteger "Quin és el teu pressupost maxim?" 1 10000))
             (if (eq ?pFlexible 1)
                 then (bind ?pPreuMaxFlexible ( round (* ?pPreuMax 1.2)) )
                 else (bind ?pPreuMaxFlexible ?pPreuMax )
             )
 
       else
-        (bind ?pPreuMax 100000) ;;preu indiferent
-        (bind ?pPreuMaxFlexible 100000) ;;preu indiferent
+        (bind ?pPreuMax 10000) ;preu indiferent
+        (bind ?pPreuMaxFlexible 10000) ;preu indiferent
     )
 
-    ;;Preguntar preu minim
-    (bind ?pFlexible (preguntaFlexible "Ets flexible en el preu minim?" ?valorsPermesosFlexible))   ;;retorna 1 si es flexible, -1 si no es flexible, 0 si el preu li es indiferent
+    ;Preguntar preu minim
+    (bind ?pFlexible (preguntaFlexible "Ets flexible amb el preu minim?" ?valorsPermesosFlexible))   ;retorna 1 si es flexible, -1 si no es flexible, 0 si el preu li es indiferent
 
     (if (neq ?pFlexible 0)
-      then (bind ?preuMin (preguntaInteger "Quin és el teu pressupost minim?" 0 ?pPreuMax))
+      then (bind ?pPreuMin (preguntaInteger "Quin és el teu pressupost minim?" 0 ?pPreuMax))
             (if (eq ?pFlexible 1)
-                then (bind ?preuMinFlexible ( round (* ?preuMin 0.8)) )
-                else (bind ?preuMinFlexible ?preuMin )
+                then (bind ?pPreuMinFlexible ( round (* ?pPreuMin 0.8)) )
+                else (bind ?pPreuMinFlexible ?pPreuMin )
             )
       else
-        (bind ?pPreuMin 0) ;;preu indiferent
-        (bind ?pPreuMinFlexible 0) ;;preu indiferent
+        (bind ?pPreuMin 0) ;preu indiferent
+        (bind ?pPreuMinFlexible 0) ;preu indiferent
+    )
+
+    ;Preguntar superficie max
+    (bind ?pFlexible (preguntaFlexible "Ets flexible amb la superficie maxima?" ?valorsPermesosFlexible))   ;retorna 1 si es flexible, -1 si no es flexible, 0 si el preu li es indiferent
+
+    (if (neq ?pFlexible 0)
+      then (bind ?pSupMax (preguntaInteger "Quin és el maxim de superficie que vols?" 15 1000))
+            (if (eq ?pFlexible 1)
+                then (bind ?pSupMaxFlexible ( round (* ?pSupMax 1.3)) )
+                else (bind ?pSupMaxFlexible ?pSupMax )
+            )
+
+      else
+        (bind ?pSupMax 1000) ;superficie indiferent
+        (bind ?pSupMaxFlexible 1000) ;superficie indiferent
+    )
+
+    ;Preguntar superficie minim
+    (bind ?pFlexible (preguntaFlexible "Ets flexible amb la superficie minima?" ?valorsPermesosFlexible))   ;retorna 1 si es flexible, -1 si no es flexible, 0 si el preu li es indiferent
+
+    (if (neq ?pFlexible 0)
+      then (bind ?pSupMin (preguntaInteger "Quin és el minim de superficie que vols?" 0 ?pSupMax))
+            (if (eq ?pFlexible 1)
+                then (bind ?pSupMinFlexible ( round (* ?pSupMin 0.7)) )
+                else (bind ?pSupMinFlexible ?pSupMin )
+            )
+      else
+        (bind ?pSupMin 15) ;superficie indiferent
+        (bind ?pSupMinFlexible 15) ;superficie indiferent
     )
 
     (bind ?llistaPositivaForta (create$))
@@ -108,24 +141,24 @@
         )
     )
 
-    ;; "segur seguit d'un servei ..."
+    ; "segur seguit d'un servei ..."
 
     (retract ?trigger)
 
     (assert (car_solicitant
-        (edat 0)
-        (fills 0)
-        (personesGrans 0)
+        (edat ?pEdat)
+        (fills ?pFills)
+        (personesGrans ?pGrans)
         (numHab 0)
         (habFlexible 0)
         (preuMaxim ?pPreuMax)
         (preuMaxFlexible ?pPreuMaxFlexible)
         (preuMinim ?pPreuMin)
         (preuMinimFlexible ?pPreuMinFlexible)
-        (superficieMax 10000)
-        (superficieMaxFlex 10000)
-        (superficieMinim 0)
-        (superficieMinimFlex 0)
+        (superficieMax ?pSupMax)
+        (superficieMaxFlex ?pSupMaxFlexible)
+        (superficieMinim ?pSupMin)
+        (superficieMinimFlex ?pSupMinFlexible)
         (garatge 0)
         (balco 0)
         (mascota 0)
@@ -172,10 +205,10 @@
     do
       (bind ?curr-obj (nth$ ?i ?vivendes))
       (bind ?acceptable (comprovarVivenda ?curr-obj ?numhab
-						    ?pPreuMax
-						    ?pPreuMin
-						    ?pSupMax
-						    ?pSupMin
+						    ?pPreuMaxFlex
+						    ?pPreuMinFlex
+						    ?pSupMaxFlex
+						    ?pSupMinFlex
 						    ?pGaratge
 						    ?pBalco
 						    ?pMascota
@@ -187,15 +220,16 @@
 							    ?fills
 							    ?personesGrans
 							    ?habflex
-							    ?pPreuMaxFlex
-							    ?pPreuMinFlex
-							    ?pSupMaxFlex
-							    ?pSupMinFlex
+							    ?pPreuMax
+							    ?pPreuMin
+							    ?pSupMax
+							    ?pSupMin
 							    ?pGaratge
 							    ?pBalco
 							    ?pMascota
 							    ?llistaPositivaDebil
 							    ?llistaNegativaDebil))
+	  (printout t ?puntuacioVivenda crlf)
           (if (> ?puntuacioVivenda 0) then (printVivenda ?curr-obj))
       )
   )

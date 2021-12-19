@@ -1,5 +1,5 @@
-(deffunction acceptableInteger (?valor ?min ?max)
-  ( return ( or (> ?valor ?max) (< ?valor ?min)) )
+(deffunction acceptableInteger (?valor ?max ?min)
+  ( return (and (>= ?valor ?min) (<= ?valor ?max)) )
 )
 
 (deffunction acceptableSingleInteger (?valor ?esperat)
@@ -47,21 +47,21 @@
     (bind ?preu (send ?c get-preu))
     (bind ?res (acceptableInteger ?preu ?pPreuMax ?pPreuMin))
     (if (not ?res)
-	then return FALSE
+	then (return FALSE)
     )
 
     ;;superficie
     (bind ?superficie (send ?c get-superficie))
     (bind ?res (acceptableInteger ?superficie ?pSupMax ?pSupMin))
     (if (not ?res)
-	then return FALSE
+	then (return FALSE)
     )
 
     ;;numhab
     (bind ?numHab (send ?c get-num_dormitoris))
     (bind ?res (acceptableSingleInteger ?pnumHab ?numHab))
     (if (not ?res)
-	then return FALSE
+	then (return FALSE)
     )
 
 
@@ -69,21 +69,21 @@
     (bind ?mascota (send ?c get-mascota))
     (bind ?res (acceptableBinari ?pmascota ?mascota))
     (if (not ?res)
-	then return FALSE
+	then (return FALSE)
     )
 
     ;;balco
     (bind ?balco (send ?c get-balco))
     (bind ?res (acceptableBinari ?pbalco ?balco))
     (if (not ?res)
-	then return FALSE
+	then (return FALSE)
     )
 
     ;;garatge
     (bind ?garatge (send ?c get-garatge))
     (bind ?res (acceptableBinari ?pgaratge ?garatge))
     (if (not ?res)
-	then return FALSE
+	then (return FALSE)
     )
 
     ;;Serveis Positius
@@ -98,7 +98,7 @@
         )
         ;;s'ha trobat el servei?
         (if (not ?found)
-          then return FALSE
+          then (return FALSE)
         )
     )
 
@@ -113,7 +113,7 @@
         )
         ;;s'ha trobat el servei?
         (if ?found
-          then return FALSE
+          then (return FALSE)
         )
     )
 
@@ -124,10 +124,10 @@
 				      ?fills
 				      ?personesGrans
 				      ?habflex
-				      ?pPreuMaxFlex
-				      ?pPreuMinFlex
-				      ?pSupMaxFlex
-				      ?pSupMinFlex
+				      ?pPreuMax
+				      ?pPreuMin
+				      ?pSupMax
+				      ?pSupMin
 				      ?pGaratge
 				      ?pBalco
 				      ?pMascota
@@ -140,37 +140,37 @@
     (bind ?puntuacio 100)
 
     (bind ?preu (send ?c get-preu))
-    (if (and (> ?preu ?pPreuMaxFlex) (< ?preu ?pPreuMinFlex)) then (bind ?puntuacio (- ?puntuacio 50)))
+    (if (or (> ?preu ?pPreuMax) (< ?preu ?pPreuMin)) then (bind ?puntuacio (- ?puntuacio 50)))
 
     (bind ?superficie (send ?c get-superficie))
-    (if (and (> ?superficie ?pSupMaxFlex) (< ?superficie ?pSupMinFlex)) then (bind ?puntuacio (- ?puntuacio 50)))
+    (if (or (> ?superficie ?pSupMax) (< ?superficie ?pSupMin)) then (bind ?puntuacio (- ?puntuacio 50)))
 
     (bind $?serveis (send ?vivenda get-esta_a_prop))
 
     (loop-for-count (?i 1 (length$ $?llistaPositivaDebil))
 	(if (not (member$ (nth$ ?i ?llistaPositivaDebil) $?serveis)) then (bind ?puntuacio (- ?puntuacio 50)))
-	(if (< ?puntuacio 0) then return ?puntuacio)
+	(if (< ?puntuacio 0) then (return ?puntuacio))
     )
 
     (loop-for-count (?i 1 (length$ $?llistaNegativaDebil))
 	(if (member$ (nth$ ?i ?llistaNegativaDebil) $?serveis) then (bind ?puntuacio (- ?puntuacio 50)))
-	(if (< ?puntuacio 0) then return ?puntuacio)
+	(if (< ?puntuacio 0) then (return ?puntuacio))
     )
 
     (bind ?balco (send ?c get-balco))
     (if (and (not ?balco) (eq ?pBalco 1)) then (bind ?puntuacio (- ?puntuacio 50))
     else (if (and ?balco (eq ?pBalco -1)) then (bind ?puntuacio (- ?puntuacio 50))))
-    (if (< ?puntuacio 0) then return ?puntuacio)
+    (if (< ?puntuacio 0) then (return ?puntuacio))
 
     (bind ?garatge (send ?c get-garatge))
     (if (and (not ?garatge) (eq ?pGaratge 1)) then (bind ?puntuacio (- ?puntuacio 50))
     else (if (and ?garatge (eq ?pGaratge -1)) then (bind ?puntuacio (- ?puntuacio 50))))
-    (if (< ?puntuacio 0) then return ?puntuacio)
+    (if (< ?puntuacio 0) then (return ?puntuacio))
 
     (bind ?mascota (send ?c get-mascota))
     (if (and (not ?mascota) (eq ?pMascota 1)) then (bind ?puntuacio (- ?puntuacio 50))
     else (if (and ?mascota (eq ?pMascota -1)) then (bind ?puntuacio (- ?puntuacio 50))))
-    (if (< ?puntuacio 0) then return ?puntuacio)
+    (if (< ?puntuacio 0) then (return ?puntuacio))
 
     (return ?puntuacio)
 )
