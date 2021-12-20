@@ -93,6 +93,13 @@
 #    Data properties
 #################################################################
 
+###  http://www.co-ode.org/ontologies/ont.owl#ascensor
+<http://www.co-ode.org/ontologies/ont.owl#ascensor> rdf:type owl:DatatypeProperty ;
+                                                    rdfs:subPropertyOf owl:topDataProperty ;
+                                                    rdfs:domain <http://www.semanticweb.org/usuario/ontologies/2021/10/Caracteristiques> ;
+                                                    rdfs:range xsd:boolean .
+
+
 ###  http://www.semanticweb.org/usuario/ontologies/2021/10/aire_condicionat
 <http://www.semanticweb.org/usuario/ontologies/2021/10/aire_condicionat> rdf:type owl:DatatypeProperty ;
                                                                          rdfs:subPropertyOf owl:topDataProperty ;
@@ -489,6 +496,7 @@ owl:topDataProperty rdfs:range xsd:boolean .
 ###  http://www.co-ode.org/ontologies/ont.owl#CarVivenda_0
 <http://www.co-ode.org/ontologies/ont.owl#CarVivenda_0> rdf:type owl:NamedIndividual ,
                                                                  <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Vivenda> ;
+                                                        <http://www.co-ode.org/ontologies/ont.owl#ascensor> "true"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/aire_condicionat> "true"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/balco> "true"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/calefaccio> "true"^^xsd:boolean ;
@@ -511,6 +519,7 @@ owl:topDataProperty rdfs:range xsd:boolean .
 ###  http://www.co-ode.org/ontologies/ont.owl#CarVivenda_1
 <http://www.co-ode.org/ontologies/ont.owl#CarVivenda_1> rdf:type owl:NamedIndividual ,
                                                                  <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Vivenda> ;
+                                                        <http://www.co-ode.org/ontologies/ont.owl#ascensor> "false"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/aire_condicionat> "false"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/balco> "true"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/calefaccio> "true"^^xsd:boolean ;
@@ -533,6 +542,7 @@ owl:topDataProperty rdfs:range xsd:boolean .
 ###  http://www.co-ode.org/ontologies/ont.owl#CarVivenda_2
 <http://www.co-ode.org/ontologies/ont.owl#CarVivenda_2> rdf:type owl:NamedIndividual ,
                                                                  <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Vivenda> ;
+                                                        <http://www.co-ode.org/ontologies/ont.owl#ascensor> "true"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/aire_condicionat> "true"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/balco> "false"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/calefaccio> "true"^^xsd:boolean ;
@@ -555,6 +565,7 @@ owl:topDataProperty rdfs:range xsd:boolean .
 ###  http://www.co-ode.org/ontologies/ont.owl#CarVivenda_3
 <http://www.co-ode.org/ontologies/ont.owl#CarVivenda_3> rdf:type owl:NamedIndividual ,
                                                                  <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Vivenda> ;
+                                                        <http://www.co-ode.org/ontologies/ont.owl#ascensor> "false"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/aire_condicionat> "true"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/balco> "true"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/calefaccio> "false"^^xsd:boolean ;
@@ -577,6 +588,7 @@ owl:topDataProperty rdfs:range xsd:boolean .
 ###  http://www.co-ode.org/ontologies/ont.owl#CarVivenda_4
 <http://www.co-ode.org/ontologies/ont.owl#CarVivenda_4> rdf:type owl:NamedIndividual ,
                                                                  <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Vivenda> ;
+                                                        <http://www.co-ode.org/ontologies/ont.owl#ascensor> "true"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/aire_condicionat> "false"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/balco> "true"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/calefaccio> "true"^^xsd:boolean ;
@@ -599,6 +611,7 @@ owl:topDataProperty rdfs:range xsd:boolean .
 ###  http://www.co-ode.org/ontologies/ont.owl#CarVivenda_5
 <http://www.co-ode.org/ontologies/ont.owl#CarVivenda_5> rdf:type owl:NamedIndividual ,
                                                                  <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Vivenda> ;
+                                                        <http://www.co-ode.org/ontologies/ont.owl#ascensor> "false"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/aire_condicionat> "true"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/balco> "true"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/calefaccio> "true"^^xsd:boolean ;
@@ -621,6 +634,7 @@ owl:topDataProperty rdfs:range xsd:boolean .
 ###  http://www.co-ode.org/ontologies/ont.owl#CarVivenda_6
 <http://www.co-ode.org/ontologies/ont.owl#CarVivenda_6> rdf:type owl:NamedIndividual ,
                                                                  <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Vivenda> ;
+                                                        <http://www.co-ode.org/ontologies/ont.owl#ascensor> "false"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/aire_condicionat> "true"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/balco> "false"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/calefaccio> "true"^^xsd:boolean ;
@@ -643,6 +657,7 @@ owl:topDataProperty rdfs:range xsd:boolean .
 ###  http://www.co-ode.org/ontologies/ont.owl#CarVivenda_7
 <http://www.co-ode.org/ontologies/ont.owl#CarVivenda_7> rdf:type owl:NamedIndividual ,
                                                                  <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Vivenda> ;
+                                                        <http://www.co-ode.org/ontologies/ont.owl#ascensor> "false"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/aire_condicionat> "true"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/balco> "true"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/calefaccio> "true"^^xsd:boolean ;
@@ -665,6 +680,7 @@ owl:topDataProperty rdfs:range xsd:boolean .
 ###  http://www.co-ode.org/ontologies/ont.owl#CarVivenda_8
 <http://www.co-ode.org/ontologies/ont.owl#CarVivenda_8> rdf:type owl:NamedIndividual ,
                                                                  <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Vivenda> ;
+                                                        <http://www.co-ode.org/ontologies/ont.owl#ascensor> "true"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/aire_condicionat> "false"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/balco> "false"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/calefaccio> "false"^^xsd:boolean ;
@@ -687,6 +703,7 @@ owl:topDataProperty rdfs:range xsd:boolean .
 ###  http://www.co-ode.org/ontologies/ont.owl#CarVivenda_9
 <http://www.co-ode.org/ontologies/ont.owl#CarVivenda_9> rdf:type owl:NamedIndividual ,
                                                                  <http://www.semanticweb.org/usuario/ontologies/2021/10/Car_Vivenda> ;
+                                                        <http://www.co-ode.org/ontologies/ont.owl#ascensor> "true"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/aire_condicionat> "true"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/balco> "false"^^xsd:boolean ;
                                                         <http://www.semanticweb.org/usuario/ontologies/2021/10/calefaccio> "true"^^xsd:boolean ;
