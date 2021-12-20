@@ -221,6 +221,9 @@
     (slot terrassa
         (type SYMBOL)
         (create-accessor read-write))
+    (slot ascensor
+        (type SYMBOL)
+        (create-accessor read-write))
     (slot vivenda_amb_vistes
         (type SYMBOL)
         (create-accessor read-write))
@@ -317,6 +320,7 @@
          (planta  1)
          (solejat  TRUE)
          (terrassa  TRUE)
+         (ascensor  TRUE)
          (vivenda_amb_vistes  TRUE)
     )
 
@@ -335,6 +339,7 @@
          (planta  2)
          (solejat  TRUE)
          (terrassa  TRUE)
+         (ascensor  TRUE)
          (vivenda_amb_vistes  TRUE)
     )
 
@@ -353,6 +358,7 @@
          (planta  2)
          (solejat  FALSE)
          (terrassa  FALSE)
+         (ascensor  FALSE)
          (vivenda_amb_vistes  FALSE)
     )
 
@@ -371,6 +377,7 @@
          (planta  0)
          (solejat  TRUE)
          (terrassa  FALSE)
+         (ascensor  TRUE)
          (vivenda_amb_vistes  FALSE)
     )
 
@@ -389,6 +396,7 @@
          (planta  0)
          (solejat  TRUE)
          (terrassa  FALSE)
+         (ascensor  TRUE)
          (vivenda_amb_vistes  FALSE)
     )
 
@@ -407,6 +415,7 @@
          (planta  4)
          (solejat  FALSE)
          (terrassa  FALSE)
+         (ascensor  FALSE)
          (vivenda_amb_vistes  TRUE)
     )
 
@@ -425,6 +434,7 @@
          (planta  4)
          (solejat  TRUE)
          (terrassa  FALSE)
+         (ascensor  FALSE)
          (vivenda_amb_vistes  TRUE)
     )
 
@@ -443,6 +453,7 @@
          (planta  2)
          (solejat  TRUE)
          (terrassa  FALSE)
+         (ascensor  TRUE)
          (vivenda_amb_vistes  FALSE)
     )
 
@@ -461,6 +472,7 @@
          (planta  2)
          (solejat  FALSE)
          (terrassa  FALSE)
+         (ascensor  FALSE)
          (vivenda_amb_vistes  FALSE)
     )
 
@@ -479,6 +491,7 @@
          (planta  3)
          (solejat  TRUE)
          (terrassa  FALSE)
+         (ascensor  TRUE)
          (vivenda_amb_vistes  TRUE)
     )
 
