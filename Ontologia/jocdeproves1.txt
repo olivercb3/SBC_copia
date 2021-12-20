@@ -14,8 +14,6 @@ si
 indiferent
 si
 si
-segur escoles
-supermercats
-segur oci
 indiferent
+segur oci
 indiferent

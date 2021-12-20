@@ -3,17 +3,17 @@
 0
 si
 1100
-no
+si
 400
 si
-200
+100
 si
 40
 si
 1
 indiferent
 indiferent
-Indiferent
-Indiferent
-Indiferent
+indiferent
+indiferent
+indiferent
 

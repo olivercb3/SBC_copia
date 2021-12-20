@@ -107,7 +107,7 @@
     )
 
     (bind ?hab (send ?c get-num_dormitoris))
-    (if (neq ?hab ?pnumHab) then
+    (if (< ?hab ?pnumHab) then
       (bind ?puntuacio (- ?puntuacio 50))
       (bind ?index (+ (length$ ?justificacions) 1))
       (bind ?just "Les habitacions no son les demanades")
