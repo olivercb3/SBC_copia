@@ -45,7 +45,7 @@
 
     (if (<= ?pEdat 30)
 	then (printout t "Com que ets jove, intentarem que les vivendes que mostrem tinguin llocs d'oci a prop" crlf)
-	else if(>= ?pEdat 65) then (printout t "Com que ets gran, intentarem que les vivendes que mostrem tinguin ascensor o estiguin com a molt a la primera planta, i tinguin a prop supermercats i centres de salut" crlf)
+	else (if(>= ?pEdat 65) then (printout t "Com que ets gran, intentarem que les vivendes que mostrem tinguin ascensor o estiguin com a molt a la primera planta, i tinguin a prop supermercats i centres de salut" crlf))
     )
 
     (bind ?pFills (preguntaIntegerUnbound "Quants fills tens o planeges tenir en un futur proper?"))
