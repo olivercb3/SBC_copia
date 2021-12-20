@@ -22,7 +22,7 @@
     (printout t "Preu per metre: "   (/ ?preu ?superficie) crlf)
     (printout t "Num Dorimitoris: "   (send ?c get-num_dormitoris) crlf)
     (printout t "Planta: "   (send ?c get-planta) crlf)
-    (printout t "Ascensor: "  FALSE crlf)
+    (printout t "ascensor: "  (send ?c get-ascensor) crlf)
     (printout t "aire condicionat: "   (send ?c get-aire_condicionat) crlf)
     (printout t "balco: "   (send ?c get-balco) crlf)
     (printout t "calefaccio: "   (send ?c get-calefaccio) crlf)

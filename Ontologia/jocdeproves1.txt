@@ -17,3 +17,5 @@ si
 segur escoles
 supermercats
 segur oci
+indiferent
+indiferent

@@ -3,7 +3,7 @@
 )
 
 (deffunction acceptableSingleInteger (?valor ?esperat)
-  ( return (or (eq ?valor 0) (eq ?valor ?esperat )))
+  ( return (or (eq ?valor 0) (<= ?valor ?esperat )))
 )
 
 (deffunction acceptableServei (?valorSol ?serveiViv)
@@ -14,7 +14,8 @@
         (case "transportpublic" then (return (eq (type ?serveiViv) TransportPublic)))
         (case "escoles" then (return (eq (type ?serveiViv) Escoles)))
         (case "supermercats" then (return (eq (type ?serveiViv) SuperMercats)))
-        (case "hipermercats" then (return (eq (type ?serveiViv)g Hipermercats)))
+        (case "hipermercats" then (return (eq (type ?serveiViv) Hipermercats)))
+        (case "mercat" then (return (eq (type ?serveiViv) Mercat)))
     )
 )
 

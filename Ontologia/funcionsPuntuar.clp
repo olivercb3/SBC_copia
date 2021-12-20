@@ -72,7 +72,7 @@
 (deffunction puntuarVivenda (?vivenda ?edat
 				      ?fills
 				      ?gentGran
-				      ?habflex
+				      ?pnumHab
 				      ?pPreuMax
 				      ?pPreuMin
 				      ?pSupMax
@@ -91,10 +91,28 @@
     (bind ?puntuacio 100)
 
     (bind ?preu (send ?c get-preu))
-    (if (or (> ?preu ?pPreuMax) (< ?preu ?pPreuMin)) then (bind ?puntuacio (- ?puntuacio 50)))
+    (if (or (> ?preu ?pPreuMax) (< ?preu ?pPreuMin)) then
+      (bind ?puntuacio (- ?puntuacio 50))
+      (bind ?index (+ (length$ ?justificacions) 1))
+      (bind ?just "El preu no esta dins del rang especificat")
+      (bind ?justificacions (insert$ ?justificacions ?index ?just))
+    )
 
     (bind ?superficie (send ?c get-superficie))
-    (if (or (> ?superficie ?pSupMax) (< ?superficie ?pSupMin)) then (bind ?puntuacio (- ?puntuacio 50)))
+    (if (or (> ?superficie ?pSupMax) (< ?superficie ?pSupMin)) then
+      (bind ?puntuacio (- ?puntuacio 50))
+      (bind ?index (+ (length$ ?justificacions) 1))
+      (bind ?just "La superficie no esta dins del rang especificat")
+      (bind ?justificacions (insert$ ?justificacions ?index ?just))
+    )
+
+    (bind ?hab (send ?c get-num_dormitoris))
+    (if (neq ?hab ?pnumHab) then
+      (bind ?puntuacio (- ?puntuacio 50))
+      (bind ?index (+ (length$ ?justificacions) 1))
+      (bind ?just "Les habitacions no son les demanades")
+      (bind ?justificacions (insert$ ?justificacions ?index ?just))
+    )
 
     (bind $?serveis (send ?vivenda get-esta_a_prop))
     (loop-for-count (?i 1 (length$ $?pllistaPositivaDebil))
@@ -115,7 +133,10 @@
         )
     )
 
-    (if (< ?puntuacio 0) then (return -50))
+    (if (< ?puntuacio 0) then
+      (bind ?justificacions (insert$ ?justificacions 1 ?puntuacio))
+      (return ?justificacions)
+    )
 
     (loop-for-count (?i 1 (length$ $?pllistaNegativaDebil))
         (bind ?curr-servei (nth$ ?i ?pllistaNegativaDebil))
@@ -134,7 +155,10 @@
         )
     )
 
-    (if (< ?puntuacio 0) then (return -50))
+    (if (< ?puntuacio 0) then
+      (bind ?justificacions (insert$ ?justificacions 1 ?puntuacio))
+      (return ?justificacions)
+    )
 
     (bind ?balco (send ?c get-balco))
     (if (and (not ?balco) (eq ?pBalco 1)) then
@@ -147,7 +171,7 @@
       (bind ?index (+ (length$ ?justificacions) 1))
       (bind ?justificacions (insert$ ?justificacions ?index "Te balco i no el vol"))
     )
-    (if (< ?puntuacio 0) then (return ?puntuacio))
+    (if (< ?puntuacio 0) then (bind ?justificacions (insert$ ?justificacions 1 ?puntuacio))(return ?justificacions))
     (bind ?garatge (send ?c get-garatge))
     (if (and (not ?garatge) (eq ?pGaratge 1)) then
       (bind ?puntuacio (- ?puntuacio 50))
@@ -158,7 +182,7 @@
       (bind ?puntuacio (- ?puntuacio 50))
       (bind ?index (+ (length$ ?justificacions) 1))
       (bind ?justificacions (insert$ ?justificacions ?index "Te garatege i no el vol")))
-    (if (< ?puntuacio 0) then (return ?puntuacio))
+    (if (< ?puntuacio 0) then (bind ?justificacions (insert$ ?justificacions 1 ?puntuacio))(return ?justificacions))
 
     (bind ?mascota (send ?c get-mascota))
     (if (and (not ?mascota) (eq ?pMascota 1)) then
@@ -171,17 +195,16 @@
       (bind ?index (+ (length$ ?justificacions) 1))
       (bind ?justificacions (insert$ ?justificacions ?index "Te mascota i no el vol"))
     )
-    (if (< ?puntuacio 0) then (return ?puntuacio))
+    (if (< ?puntuacio 100) then (bind ?justificacions (insert$ ?justificacions 1 ?puntuacio))(return ?justificacions))
 
-    (bind ?puntsServei 30)
     (bind ?puntsFillsEscoles 30)
     (bind ?puntsGentGranHospital 30)
     (bind ?puntsGentGranAscensor 30)
     (bind ?puntsJoveOci 30)
     (bind ?puntsVolCaracteristica 15)
     (bind ?puntsNoVolCaracteristica 15)
-    (bind ?puntsServei 30)
-
+    (bind ?puntsServeisGenerals 20)
+    (bind ?puntsZvMascota 10)
 
     ;;Si te una de les següents Caracteristiques1
     ;;terrassa garatge piscina balco
@@ -208,10 +231,37 @@
       (bind ?justificacions (insert$ ?justificacions ?index ?just))
     )
 
+    (bind ?check (ServeiAprop ?vivenda "zonesverdes"))
+    (if ?check
+      then
+        (bind ?puntuacio (+ ?puntuacio ?puntsServeisGenerals))
+        (bind ?index (+ (length$ ?justificacions) 1))
+        (bind ?justificacions (insert$ ?justificacions ?index "Te zones verdes a prop"))
+    )
 
+    (bind ?check (ServeiAprop ?vivenda "transportpublic"))
+    (if ?check
+      then
+        (bind ?puntuacio (+ ?puntuacio ?puntsServeisGenerals))
+        (bind ?index (+ (length$ ?justificacions) 1))
+        (bind ?justificacions (insert$ ?justificacions ?index "Te transport public a prop"))
+    )
 
+    (bind ?check (ServeiAprop ?vivenda "centresalut"))
+    (if ?check
+      then
+        (bind ?puntuacio (+ ?puntuacio ?puntsServeisGenerals))
+        (bind ?index (+ (length$ ?justificacions) 1))
+        (bind ?justificacions (insert$ ?justificacions ?index "Te un centre de salut a prop"))
+    )
 
-
+    (bind ?check (ServeiAprop ?vivenda "mercat"))
+    (if ?check
+      then
+        (bind ?puntuacio (+ ?puntuacio ?puntsServeisGenerals))
+        (bind ?index (+ (length$ ?justificacions) 1))
+        (bind ?justificacions (insert$ ?justificacions ?index "Te un mercat a prop"))
+    )
 
   ;;fills
   (if (> ?fills 0) then
@@ -234,14 +284,14 @@
         (bind ?justificacions (insert$ ?justificacions ?index "Te un centre de salut proper"))
     )
 
-    ;;(bind ?ascensor (send ?c get-ascensor))
-    (bind ?ascensor FALSE)
-    (bind ?planta (send ?c get-balco))
-    (if   (and (> ?planta 1) (not ?ascensor))
+    (bind ?ascensor (send ?c get-ascensor))
+
+    (bind ?planta (send ?c get-planta))
+    (if   (not (and (> ?planta 1) (not ?ascensor)))
       then
         (bind ?puntuacio (+ ?puntuacio ?puntsGentGranAscensor))
         (bind ?index (+ (length$ ?justificacions) 1))
-        (bind ?justificacions (insert$ ?justificacions ?index "Dificil accesibilitat"))
+        (bind ?justificacions (insert$ ?justificacions ?index "Facil acces per la gent gran"))
     )
   )
 
@@ -314,6 +364,16 @@
         )
     )
 
+    (if (or (eq ?pMascota 1)(eq ?pMascota 2))
+      then
+        (bind ?check (ServeiAprop ?vivenda "zonesverdes"))
+        (if ?check
+          then
+            (bind ?puntuacio (+ ?puntuacio ?puntsZvMascota))
+            (bind ?index (+ (length$ ?justificacions) 1))
+            (bind ?justificacions (insert$ ?justificacions ?index "Te zones verdes a prop, ideal per a les mascotes"))
+        )
+    )
 
     (bind ?justificacions (insert$ ?justificacions 1 ?puntuacio))
     (return ?justificacions)

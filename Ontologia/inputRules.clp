@@ -197,7 +197,7 @@
         (edat ?edat)
         (fills ?fills)
         (personesGrans ?personesGrans)
-        (numHab ?numhab)
+        (numHab ?pnumhab)
         (habFlexible ?habflex)
         (preuMaxim ?pPreuMax)
         (preuMaxFlexible ?pPreuMaxFlex)
@@ -232,7 +232,7 @@
   (loop-for-count (?i 1 (length$ $?vivendes))
     do
       (bind ?curr-obj (nth$ ?i ?vivendes))
-      (bind ?acceptable (comprovarVivenda ?curr-obj ?numhab
+      (bind ?acceptable (comprovarVivenda ?curr-obj ?habflex
 						    ?pPreuMaxFlex
 						    ?pPreuMinFlex
 						    ?pSupMaxFlex
@@ -247,7 +247,7 @@
           (bind ?resultat (puntuarVivenda ?curr-obj ?edat
 					 	    ?fills
 						    ?personesGrans
-						    ?habflex
+						    ?pnumhab
 						    ?pPreuMax
 						    ?pPreuMin
 						    ?pSupMax
@@ -257,8 +257,6 @@
 						    ?pMascota
 						    ?llistaPositivaDebil
 						    ?llistaNegativaDebil))
-
-
 
           (bind ?puntuacio (nth$ 1 ?resultat))
           (if (> ?puntuacio 100)
@@ -277,7 +275,7 @@
             then
               (bind ?index (+ (length$ ?llistaAdequada) 1))
               (bind ?llistaAdequada (insert$ ?llistaAdequada ?index ?curr-obj))
-              (bind ?llistaBonaRecomanacioPuntuacions (insert$ ?llistaBonaRecomanacioPuntuacions ?index ?resultat))
+              (bind ?llistaAdequadaPuntuacions (insert$ ?llistaAdequadaPuntuacions ?index ?puntuacio))
           )
         )
         )
@@ -308,7 +306,7 @@
         (bind ?justificacions (puntuarVivenda ?viv ?edat
               ?fills
               ?personesGrans
-              ?habflex
+              ?pnumhab
               ?pPreuMax
               ?pPreuMin
               ?pSupMax
@@ -356,7 +354,7 @@
         (bind ?justificacions (puntuarVivenda ?viv ?edat
               ?fills
               ?personesGrans
-              ?habflex
+              ?pnumhab
               ?pPreuMax
               ?pPreuMin
               ?pSupMax
@@ -402,7 +400,7 @@
       (bind ?justificacions (puntuarVivenda ?viv ?edat
             ?fills
             ?personesGrans
-            ?habflex
+            ?pnumhab
             ?pPreuMax
             ?pPreuMin
             ?pSupMax
@@ -418,7 +416,6 @@
           (printout t (nth$ ?j ?justificacions) crlf)
       )
       (printout t "---------------------" crlf)
-
 
       (bind ?llistaAdequadaPuntuacions (delete$ ?llistaAdequadaPuntuacions ?max-index ?max-index))
       (bind ?llistaAdequada (delete$ ?llistaAdequada ?max-index ?max-index))
