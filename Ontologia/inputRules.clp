@@ -143,7 +143,7 @@
 
     (while TRUE
       do
-        (bind ?pServei (preguntaServeisPositiva "Necessites algun servei a prop?"))
+        (bind ?pServei (preguntaServeisPositiva "Necessites algun servei a prop? Pots posar 'segur' davant per garantir-lo, i indiferent per deixar d'introduir serveis"))
         (if (eq (nth$ 1 ?pServei) 0)
           then (break)
           else
@@ -160,7 +160,7 @@
 
     (while TRUE
       do
-        (bind ?pServei (preguntaServeisNegativa "No vols algun servei a prop?"))
+        (bind ?pServei (preguntaServeisNegativa "No vols algun servei a prop? Pots posar 'segur' davant per garantir que no hi serà, i indiferent per deixar d'introduir serveis"))
         (if (eq (nth$ 1 ?pServei) 0)
           then (break)
           else
