@@ -109,7 +109,7 @@
     (if (neq ?pFlexible 0)
       then (bind ?pHab (preguntaInteger "Quin nombre d'habitacions vols?" 0 20))
             (if (eq ?pFlexible 1)
-                then (bind ?pHabFlexible (- ?pHab 1)
+                then (bind ?pHabFlexible (- ?pHab 1))
                 else (bind ?pHabFlexible ?pHab)
             )
       else
@@ -223,6 +223,10 @@
   (printout t "...Buscant vivendes..." crlf)
   (printout t crlf)
 
+  (bind ?llistaIdeal (create$))
+  (bind ?llistaBonaRecomenacio (create$))
+  (bind ?llistaAdequada (create$))
+
   (bind $?vivendes (find-all-instances ((?ins Vivenda)) TRUE))
   (loop-for-count (?i 1 (length$ $?vivendes))
     do
@@ -253,10 +257,58 @@
 							    ?llistaPositivaDebil
 							    ?llistaNegativaDebil))
 
-                  (printout t ?resultat crlf)
-          ;(if (> ?resultat 0) then (printVivenda ?curr-obj))
-      )
+
+
+          (bind ?puntuacio (nth$ 1 ?resultat))
+          (if (>= ?puntuacio 100)
+            then
+              (bind ?index (+ (length$ ?llistaIdeal) 1))
+              (bind ?llistaIdeal (insert$ ?llistaIdeal ?index ?curr-obj))
+          )
+          (if (and (< ?puntuacio 100) (>= ?puntuacio 0) )
+            then
+              (bind ?index (+ (length$ ?llistaBonaRecomenacio) 1))
+              (bind ?llistaBonaRecomenacio (insert$ ?llistaBonaRecomenacio ?index ?curr-obj))
+          )
+          (if (< ?puntuacio 0)
+            then
+              (bind ?index (+ (length$ ?llistaAdequada) 1))
+              (bind ?llistaAdequada (insert$ ?llistaAdequada ?index ?curr-obj))
+          )
+        )
+    )
+
+  ;;llistaIdeal
+  (printout t "------------LLISTA IDEAL---------" crlf)
+  (printout t  crlf)
+  (loop-for-count (?i 1 (length$ $?llistaIdeal))
+    do
+      (bind ?viv (nth$ ?i ?llistaIdeal))
+      (printVivenda ?viv)
+      (printout t "---------------------" crlf)
   )
+
+  ;;llistaBonaRecomenacio
+  (printout t "------------LLISTA BONES RECOMENACIONS---------" crlf)
+  (printout t  crlf)
+  (loop-for-count (?i 1 (length$ $?llistaBonaRecomenacio))
+    do
+      (bind ?viv (nth$ ?i ?llistaIdeal))
+      (printVivenda ?viv)
+      (printout t "---------------------" crlf)
+  )
+
+  ;;llistaAdequada
+  (printout t "------------LLISTA ADEQUADA---------" crlf)
+  (printout t  crlf)
+  (loop-for-count (?i 1 (length$ $?llistaIdeal))
+    do
+      (bind ?viv (nth$ ?i ?llistaAdequada))
+      (printVivenda ?viv)
+      (printout t "---------------------" crlf)
+  )
+
+
   (retract ?trigger)
   (retract ?carSolicitant)
   (assert (mostrar_resultats))

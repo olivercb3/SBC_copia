@@ -1,0 +1,69 @@
+Sistema de Puntuacio
+
+Serveis
+Si te un servei que prefereixen
++30 punts
+
+Si te un servei que no prefereixen
+-30 punts
+
+Si te fills
+Si te aprop escoles a prop
++10 punts
+
+Si te gent gran
+Si te centres de salut a prop
++10 punts
+
+Si te menys de 30 anys
+Si te oci a prop
++15 punts
+
+Si te menys de 65 anys
+Si te centres de salut a prop
++10 punts
+
+Si es un grup d'estudiants
+Si te transoprt public a prop
++20 punts
+
+
+Caracteristiques Vivenda
+Si te una caracteristica que vol
++15 punts
+
+Si te una caracteristica que no vol
+-15 punts
+
+
+Si te gent gran
+Si te planta >1 i no ascensor -10 punts
+
+Si te menys de 65 anys
+Si te planta >1 i no ascensor -10 punts
+
+Si te una de les següents Caracteristiques
+- terrassa
+- garatge
+- piscina
+- balco
++7 punts
+
+
+Si te una de les següents Caracteristiques
+- aire_condicionat
+- calefaccio
+- electrodomestics
+- moblada
+- solejat
+- vivenda_amb_vistes
++5 punts
+
+La vivenda mes barata:
++50 punts
+
+La vivenda amb mes superficie:
++50 punts
+
+La vivenda amb el metre quadrat mes barat:
++15 punts

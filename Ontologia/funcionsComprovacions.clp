@@ -178,24 +178,49 @@
         ;;s'ha trobat el servei?
         (if ?found
           then (bind ?puntuacio (- ?puntuacio 50))
+          (bind ?index (+ (length$ ?justificacions) 1))
+          (bind ?justificacions (insert$ ?justificacions ?index "Te un servei de NO preferencia"))
         )
     )
 
     (if (< ?puntuacio 0) then (return -50))
 
     (bind ?balco (send ?c get-balco))
-    (if (and (not ?balco) (eq ?pBalco 1)) then (bind ?puntuacio (- ?puntuacio 50))
-    else (if (and ?balco (eq ?pBalco -1)) then (bind ?puntuacio (- ?puntuacio 50))))
+    (if (and (not ?balco) (eq ?pBalco 1)) then
+     (bind ?puntuacio (- ?puntuacio 50))
+     (bind ?index (+ (length$ ?justificacions) 1))
+     (bind ?justificacions (insert$ ?justificacions ?index "NO Te balco i en vol"))
+     )
+    (if (and ?balco (eq ?pBalco -1)) then
+      (bind ?puntuacio (- ?puntuacio 50))
+      (bind ?index (+ (length$ ?justificacions) 1))
+      (bind ?justificacions (insert$ ?justificacions ?index "Te balco i no el vol"))
+    )
     (if (< ?puntuacio 0) then (return ?puntuacio))
 
     (bind ?garatge (send ?c get-garatge))
-    (if (and (not ?garatge) (eq ?pGaratge 1)) then (bind ?puntuacio (- ?puntuacio 50))
-    else (if (and ?garatge (eq ?pGaratge -1)) then (bind ?puntuacio (- ?puntuacio 50))))
+    (if (and (not ?garatge) (eq ?pGaratge 1)) then
+      (bind ?puntuacio (- ?puntuacio 50))
+      (bind ?index (+ (length$ ?justificacions) 1))
+      (bind ?justificacions (insert$ ?justificacions ?index "NO Te garatege i en vol"))
+    )
+    (if (and ?garatge (eq ?pGaratge -1)) then
+      (bind ?puntuacio (- ?puntuacio 50))
+      (bind ?index (+ (length$ ?justificacions) 1))
+      (bind ?justificacions (insert$ ?justificacions ?index "Te garatege i no el vol")))
     (if (< ?puntuacio 0) then (return ?puntuacio))
 
     (bind ?mascota (send ?c get-mascota))
-    (if (and (not ?mascota) (eq ?pMascota 1)) then (bind ?puntuacio (- ?puntuacio 50))
-    else (if (and ?mascota (eq ?pMascota -1)) then (bind ?puntuacio (- ?puntuacio 50))))
+    (if (and (not ?mascota) (eq ?pMascota 1)) then
+      (bind ?puntuacio (- ?puntuacio 50))
+      (bind ?index (+ (length$ ?justificacions) 1))
+      (bind ?justificacions (insert$ ?justificacions ?index "NO te mascota i en vol"))
+    )
+    (if (and ?mascota (eq ?pMascota -1)) then
+      (bind ?puntuacio (- ?puntuacio 50))
+      (bind ?index (+ (length$ ?justificacions) 1))
+      (bind ?justificacions (insert$ ?justificacions ?index "Te mascota i no el vol"))
+    )
     (if (< ?puntuacio 0) then (return ?puntuacio))
 
     (bind ?justificacions (insert$ ?justificacions 1 ?puntuacio))

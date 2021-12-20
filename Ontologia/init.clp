@@ -6,6 +6,7 @@
   (load "funcionsImprimir.clp")
   (load "funcionsPreguntes.clp")
   (load "funcionsComprovacions.clp")
+  (load "funcionsPuntuar.clp")
   (load "inputRules.clp")
   (assert(initial-main))
 )
