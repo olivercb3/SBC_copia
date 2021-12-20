@@ -21,11 +21,12 @@
 
   (bind ?punts 0)
   (bind ?puntsGuany 7)
+  (bind ?justificacions (create$))
 
   (if ?terrassa then (bind ?punts (+ ?punts ?puntsGuany)))
   (if ?garatge then (bind ?punts (+ ?punts ?puntsGuany)))
   (if ?piscina then (bind ?punts (+ ?punts ?puntsGuany)))
-  (if ?piscina then (bind ?punts (+ ?punts ?balco)))
+  (if ?balco then (bind ?punts (+ ?punts ?puntsGuany)))
 
   ;;justificacio zones exteriors
   (if (> ?punts 0) then
@@ -46,6 +47,7 @@
   (bind ?solejat (send ?c get-solejat))
   (bind ?vivenda_amb_vistes (send ?c get-vivenda_amb_vistes))
 
+  (bind ?justificacions (create$))
 
   (bind ?punts 0)
   (bind ?puntsGuany 5)
@@ -108,7 +110,8 @@
           then
             (bind ?puntuacio (- ?puntuacio 50))
             (bind ?index (+ (length$ ?justificacions) 1))
-            (bind ?justificacions (insert$ ?justificacions ?index "No te un servei de preferencia"))
+            (bind ?just (str-cat "No disposa del servei " ?curr-servei " que vols"))
+            (bind ?justificacions (insert$ ?justificacions ?index ?just))
         )
     )
 
@@ -126,7 +129,8 @@
         (if ?found
           then (bind ?puntuacio (- ?puntuacio 50))
           (bind ?index (+ (length$ ?justificacions) 1))
-          (bind ?justificacions (insert$ ?justificacions ?index "Te un servei de NO preferencia"))
+          (bind ?just (str-cat "Te el servei " ?curr-servei " que no vols"))
+          (bind ?justificacions (insert$ ?justificacions ?index ?just))
         )
     )
 
@@ -182,38 +186,31 @@
     ;;Si te una de les següents Caracteristiques1
     ;;terrassa garatge piscina balco
     (bind ?ze (puntuarZonesExteriors ?vivenda))
-    (printout t ?ze crlf)
+
+    (bind ?punts (nth$ 1 ?ze))
+    (if (> ?punts 0) then
+      (bind ?just (nth$ 2 ?ze))
+      (bind ?puntuacio (+ ?puntuacio ?punts))
+      (bind ?index (+ (length$ ?justificacions) 1))
+      (bind ?justificacions (insert$ ?justificacions ?index ?just))
+    )
+
     ;;Si te una de les següents Caracteristiques2
     ;;aire_condicionat  calefaccio electrodomestics
     ;; moblada solejat vivenda_amb_vistes
     (bind ?cv (puntuarComoditats ?vivenda))
-    (printout t ?cv crlf)
 
-
-
-    (bind $?serveis (send ?vivenda get-esta_a_prop))
-    ;;Mirar si hi ha serveis
-    (loop-for-count (?i 1 (length$ $?pllistaPositivaDebil))
-      (bind ?curr-servei (nth$ ?i ?pllistaPositivaDebil))
-      ;;s'ha trobat el servei?
-      (if (not (ServeiAprop ?vivenda ?curr-servei))
-        then
-          (bind ?puntuacio (- ?puntuacio ?puntsServei))
-          (bind ?index (+ (length$ ?justificacions) 1))
-          (bind ?justificacions (insert$ ?justificacions ?index "No te un servei de preferencia"))
-      )
+    (bind ?punts (nth$ 1 ?cv))
+    (if (> ?punts 0) then
+      (bind ?just (nth$ 2 ?cv))
+      (bind ?puntuacio (+ ?puntuacio ?punts))
+      (bind ?index (+ (length$ ?justificacions) 1))
+      (bind ?justificacions (insert$ ?justificacions ?index ?just))
     )
 
-  (loop-for-count (?i 1 (length$ $?pllistaNegativaDebil))
-      (bind ?curr-servei (nth$ ?i ?pllistaPositivaDebil))
-      ;;s'ha trobat el servei?
-      (if  (ServeiAprop ?vivenda ?curr-servei)
-        then
-          (bind ?puntuacio (- ?puntuacio ?puntsServei))
-          (bind ?index (+ (length$ ?justificacions) 1))
-          (bind ?justificacions (insert$ ?justificacions ?index "Te un servei de NO preferencia"))
-      )
-  )
+
+
+
 
 
   ;;fills
@@ -317,7 +314,7 @@
         )
     )
 
-    
+
     (bind ?justificacions (insert$ ?justificacions 1 ?puntuacio))
     (return ?justificacions)
 )

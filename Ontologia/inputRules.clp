@@ -131,7 +131,6 @@
     (while TRUE
       do
         (bind ?pServei (preguntaServeisPositiva "Necessites algun servei a prop?"))
-        (printout t ?pServei crlf)
         (if (eq (nth$ 1 ?pServei) 0)
           then (break)
           else
@@ -149,7 +148,6 @@
     (while TRUE
       do
         (bind ?pServei (preguntaServeisNegativa "No vols algun servei a prop?"))
-        (printout t ?pServei crlf)
         (if (eq (nth$ 1 ?pServei) 0)
           then (break)
           else
@@ -226,9 +224,9 @@
   (bind ?llistaIdeal (create$))
   (bind ?llistaBonaRecomanacio (create$))
   (bind ?llistaAdequada (create$))
-  (bind ?llistaIdealJustificacions (create$))
-  (bind ?llistaBonaRecomanacioJustificacions (create$))
-  (bind ?llistaAdequadaJustificacions (create$))
+  (bind ?llistaIdealPuntuacions (create$))
+  (bind ?llistaBonaRecomanacioPuntuacions (create$))
+  (bind ?llistaAdequadaPuntuacions (create$))
 
   (bind $?vivendes (find-all-instances ((?ins Vivenda)) TRUE))
   (loop-for-count (?i 1 (length$ $?vivendes))
@@ -267,63 +265,167 @@
             then
               (bind ?index (+ (length$ ?llistaIdeal) 1))
               (bind ?llistaIdeal (insert$ ?llistaIdeal ?index ?curr-obj))
-              (bind ?llistaIdealJustificacions (insert$ ?llistaIdealJustificacions ?index ?resultat))
-          )
+              (bind ?llistaIdealPuntuacions (insert$ ?llistaIdealPuntuacions ?index ?puntuacio))
+          else
           (if (eq ?puntuacio 100)
             then
               (bind ?index (+ (length$ ?llistaBonaRecomanacio) 1))
               (bind ?llistaBonaRecomanacio (insert$ ?llistaBonaRecomanacio ?index ?curr-obj))
-              (bind ?llistaBonaRecomanacioJustificacions (insert$ ?llistaBonaRecomanacioJustificacions ?index ?resultat))
-          )
-          (if (< ?puntuacio 0)
+              (bind ?llistaBonaRecomanacioPuntuacions (insert$ ?llistaBonaRecomanacioPuntuacions ?index ?puntuacio))
+          else
+          (if (>= ?puntuacio 0)
             then
               (bind ?index (+ (length$ ?llistaAdequada) 1))
               (bind ?llistaAdequada (insert$ ?llistaAdequada ?index ?curr-obj))
-              (bind ?llistaAdequadaJustificacions (insert$ ?llistaAdequadaJustificacions ?index ?resultat))
+              (bind ?llistaBonaRecomanacioPuntuacions (insert$ ?llistaBonaRecomanacioPuntuacions ?index ?resultat))
           )
         )
+        )
+      )
     )
-
     ;;llistaIdeal
     (printout t "------------LLISTA IDEAL---------" crlf)
     (printout t  crlf)
-    (loop-for-count (?i 1 (length$ $?llistaIdeal))
+    (printout t "Nº Recomanacions: " (length$ $?llistaIdeal) crlf)
+
+    (bind ?n (length$ $?llistaIdeal))
+    (while (> ?n 0)
       do
-        (bind ?viv (nth$ ?i ?llistaIdeal))
+        (bind ?max-punts 0)
+        (bind ?max-index 1)
+        (loop-for-count (?i 1 (length$ $?llistaIdealPuntuacions))
+          (bind ?punts (nth$ ?i ?llistaIdealPuntuacions))
+          (if (> ?punts ?max-punts)
+            then
+              (bind ?max-punts ?punts)
+              (bind ?max-index ?i)
+          )
+        )
+
+        ;;print
+        (bind ?viv (nth$ ?max-index ?llistaIdeal))
         (printVivenda ?viv)
-	(bind ?justificacions (nth$ ?i $?llistaIdealJustificacions))
-	(loop-for-count (?j 1 (length$ $?justificacions))
-	    (printout t (nth$ ?j ?justificacions))
-	)
+        (bind ?justificacions (puntuarVivenda ?viv ?edat
+              ?fills
+              ?personesGrans
+              ?habflex
+              ?pPreuMax
+              ?pPreuMin
+              ?pSupMax
+              ?pSupMin
+              ?pGaratge
+              ?pBalco
+              ?pMascota
+              ?llistaPositivaDebil
+              ?llistaNegativaDebil))
+
+        (printout t "Justificacions:" crlf)
+      	(loop-for-count (?j 2 (length$ ?justificacions))
+      	    (printout t (nth$ ?j ?justificacions) crlf)
+      	)
         (printout t "---------------------" crlf)
+
+        (bind ?llistaIdealPuntuacions (delete$ ?llistaIdealPuntuacions ?max-index ?max-index))
+        (bind ?llistaIdeal (delete$ ?llistaIdeal ?max-index ?max-index))
+        (bind ?n (- ?n 1))
     )
+
 
     ;;llistaBonaRecomanacio
     (printout t "------------LLISTA BONES RECOMANACIONS---------" crlf)
     (printout t crlf)
-    (loop-for-count (?i 1 (length$ $?llistaBonaRecomanacio))
+    (printout t "Nº Recomanacions: " (length$ $?llistaBonaRecomanacio) crlf)
+
+    (bind ?n (length$ $?llistaBonaRecomanacio))
+    (while (> ?n 0)
       do
-        (bind ?viv (nth$ ?i ?llistaBonaRecomanacio))
+        (bind ?max-punts 0)
+        (bind ?max-index 1)
+        (loop-for-count (?i 1 (length$ $?llistaBonaRecomanacioPuntuacions))
+          (bind ?punts (nth$ ?i ?llistaBonaRecomanacioPuntuacions))
+          (if (> ?punts ?max-punts)
+            then
+              (bind ?max-punts ?punts)
+              (bind ?max-index ?i)
+          )
+        )
+
+        ;;print
+        (bind ?viv (nth$ ?max-index ?llistaBonaRecomanacio))
         (printVivenda ?viv)
-	(bind ?justificacions (nth$ ?i $?llistaBonaRecomanacioJustificacions))
-	(loop-for-count (?j 1 (length$ $?justificacions))
-	    (printout t (nth$ ?j ?justificacions))
-	)
+        (bind ?justificacions (puntuarVivenda ?viv ?edat
+              ?fills
+              ?personesGrans
+              ?habflex
+              ?pPreuMax
+              ?pPreuMin
+              ?pSupMax
+              ?pSupMin
+              ?pGaratge
+              ?pBalco
+              ?pMascota
+              ?llistaPositivaDebil
+              ?llistaNegativaDebil))
+
+        (printout t "Justificacions:" crlf)
+      	(loop-for-count (?j 2 (length$ ?justificacions))
+      	    (printout t (nth$ ?j ?justificacions) crlf)
+      	)
         (printout t "---------------------" crlf)
+
+        (bind ?llistaBonaRecomanacioPuntuacions (delete$ ?llistaBonaRecomanacioPuntuacions ?max-index ?max-index))
+        (bind ?llistaBonaRecomanacio (delete$ ?llistaBonaRecomanacio ?max-index ?max-index))
+        (bind ?n (- ?n 1))
     )
 
   ;;llistaAdequada
   (printout t "------------LLISTA ADEQUADA---------" crlf)
-  (printout t  crlf)
-  (loop-for-count (?i 1 (length$ $?llistaAdequada))
+  (printout t "Nº Recomanacions: " (length$ $?llistaAdequada) crlf)
+
+  (bind ?n (length$ $?llistaAdequada))
+  (while (> ?n 0)
     do
-      (bind ?viv (nth$ ?i ?llistaAdequada))
+      (bind ?max-punts 0)
+      (bind ?max-index 1)
+      (loop-for-count (?i 1 (length$ $?llistaAdequadaPuntuacions))
+        (bind ?punts (nth$ ?i ?llistaAdequadaPuntuacions))
+        (if (> ?punts ?max-punts)
+          then
+            (bind ?max-punts ?punts)
+            (bind ?max-index ?i)
+        )
+      )
+
+      ;;print
+      (bind ?viv (nth$ ?max-index ?llistaAdequada))
       (printVivenda ?viv)
+      (bind ?justificacions (puntuarVivenda ?viv ?edat
+            ?fills
+            ?personesGrans
+            ?habflex
+            ?pPreuMax
+            ?pPreuMin
+            ?pSupMax
+            ?pSupMin
+            ?pGaratge
+            ?pBalco
+            ?pMascota
+            ?llistaPositivaDebil
+            ?llistaNegativaDebil))
+
+      (printout t "Justificacions:" crlf)
+      (loop-for-count (?j 2 (length$ ?justificacions))
+          (printout t (nth$ ?j ?justificacions) crlf)
+      )
       (printout t "---------------------" crlf)
+
+
+      (bind ?llistaAdequadaPuntuacions (delete$ ?llistaAdequadaPuntuacions ?max-index ?max-index))
+      (bind ?llistaAdequada (delete$ ?llistaAdequada ?max-index ?max-index))
+      (bind ?n (- ?n 1))
   )
 
 
   (retract ?trigger)
   (retract ?carSolicitant)
-  (assert (mostrar_resultats))
 )
