@@ -270,7 +270,7 @@
       then
         (bind ?puntuacio (+ ?puntuacio ?puntsFillsEscoles))
         (bind ?index (+ (length$ ?justificacions) 1))
-        (bind ?justificacions (insert$ ?justificacions ?index "Te un servei de NO preferencia"))
+        (bind ?justificacions (insert$ ?justificacions ?index "Te escoles a prop per als fills"))
     )
   )
 
