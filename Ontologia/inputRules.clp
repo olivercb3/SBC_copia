@@ -224,8 +224,11 @@
   (printout t crlf)
 
   (bind ?llistaIdeal (create$))
-  (bind ?llistaBonaRecomenacio (create$))
+  (bind ?llistaBonaRecomanacio (create$))
   (bind ?llistaAdequada (create$))
+  (bind ?llistaIdealJustificacions (create$))
+  (bind ?llistaBonaRecomanacioJustificacions (create$))
+  (bind ?llistaAdequadaJustificacions (create$))
 
   (bind $?vivendes (find-all-instances ((?ins Vivenda)) TRUE))
   (loop-for-count (?i 1 (length$ $?vivendes))
@@ -244,64 +247,75 @@
       (if ?acceptable
         then
           (bind ?resultat (puntuarVivenda ?curr-obj ?edat
-							    ?fills
-							    ?personesGrans
-							    ?habflex
-							    ?pPreuMax
-							    ?pPreuMin
-							    ?pSupMax
-							    ?pSupMin
-							    ?pGaratge
-							    ?pBalco
-							    ?pMascota
-							    ?llistaPositivaDebil
-							    ?llistaNegativaDebil))
+					 	    ?fills
+						    ?personesGrans
+						    ?habflex
+						    ?pPreuMax
+						    ?pPreuMin
+						    ?pSupMax
+						    ?pSupMin
+						    ?pGaratge
+						    ?pBalco
+						    ?pMascota
+						    ?llistaPositivaDebil
+						    ?llistaNegativaDebil))
 
 
 
           (bind ?puntuacio (nth$ 1 ?resultat))
-          (if (>= ?puntuacio 100)
+          (if (> ?puntuacio 100)
             then
               (bind ?index (+ (length$ ?llistaIdeal) 1))
               (bind ?llistaIdeal (insert$ ?llistaIdeal ?index ?curr-obj))
+              (bind ?llistaIdealJustificacions (insert$ ?llistaIdealJustificacions ?index ?resultat))
           )
-          (if (and (< ?puntuacio 100) (>= ?puntuacio 0) )
+          (if (eq ?puntuacio 100)
             then
-              (bind ?index (+ (length$ ?llistaBonaRecomenacio) 1))
-              (bind ?llistaBonaRecomenacio (insert$ ?llistaBonaRecomenacio ?index ?curr-obj))
+              (bind ?index (+ (length$ ?llistaBonaRecomanacio) 1))
+              (bind ?llistaBonaRecomanacio (insert$ ?llistaBonaRecomanacio ?index ?curr-obj))
+              (bind ?llistaBonaRecomanacioJustificacions (insert$ ?llistaBonaRecomanacioJustificacions ?index ?resultat))
           )
           (if (< ?puntuacio 0)
             then
               (bind ?index (+ (length$ ?llistaAdequada) 1))
               (bind ?llistaAdequada (insert$ ?llistaAdequada ?index ?curr-obj))
+              (bind ?llistaAdequadaJustificacions (insert$ ?llistaAdequadaJustificacions ?index ?resultat))
           )
         )
     )
 
-  ;;llistaIdeal
-  (printout t "------------LLISTA IDEAL---------" crlf)
-  (printout t  crlf)
-  (loop-for-count (?i 1 (length$ $?llistaIdeal))
-    do
-      (bind ?viv (nth$ ?i ?llistaIdeal))
-      (printVivenda ?viv)
-      (printout t "---------------------" crlf)
-  )
+    ;;llistaIdeal
+    (printout t "------------LLISTA IDEAL---------" crlf)
+    (printout t  crlf)
+    (loop-for-count (?i 1 (length$ $?llistaIdeal))
+      do
+        (bind ?viv (nth$ ?i ?llistaIdeal))
+        (printVivenda ?viv)
+	(bind ?justificacions (nth$ ?i $?llistaIdealJustificacions))
+	(loop-for-count (?j 1 (length$ $?justificacions))
+	    (printout t (nth$ ?j ?justificacions))
+	)
+        (printout t "---------------------" crlf)
+    )
 
-  ;;llistaBonaRecomenacio
-  (printout t "------------LLISTA BONES RECOMENACIONS---------" crlf)
-  (printout t  crlf)
-  (loop-for-count (?i 1 (length$ $?llistaBonaRecomenacio))
-    do
-      (bind ?viv (nth$ ?i ?llistaIdeal))
-      (printVivenda ?viv)
-      (printout t "---------------------" crlf)
-  )
+    ;;llistaBonaRecomanacio
+    (printout t "------------LLISTA BONES RECOMANACIONS---------" crlf)
+    (printout t crlf)
+    (loop-for-count (?i 1 (length$ $?llistaBonaRecomanacio))
+      do
+        (bind ?viv (nth$ ?i ?llistaBonaRecomanacio))
+        (printVivenda ?viv)
+	(bind ?justificacions (nth$ ?i $?llistaBonaRecomanacioJustificacions))
+	(loop-for-count (?j 1 (length$ $?justificacions))
+	    (printout t (nth$ ?j ?justificacions))
+	)
+        (printout t "---------------------" crlf)
+    )
 
   ;;llistaAdequada
   (printout t "------------LLISTA ADEQUADA---------" crlf)
   (printout t  crlf)
-  (loop-for-count (?i 1 (length$ $?llistaIdeal))
+  (loop-for-count (?i 1 (length$ $?llistaAdequada))
     do
       (bind ?viv (nth$ ?i ?llistaAdequada))
       (printVivenda ?viv)

@@ -3,6 +3,7 @@
 
 ;; Pregunta segur(si/no), (si/no), indiferent
 (deffunction preguntaBinariaBis (?text $?valors-permesos)
+  (printout t crlf)
   (format t "%s (%s) " ?text (implode$ ?valors-permesos))
   (printout t crlf)
   (bind ?r (readline))

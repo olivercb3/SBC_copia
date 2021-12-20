@@ -1,5 +1,4 @@
 (defrule initAndLoad "Load Files"
-  ;;hauria de ser amb initial-fact pero no sabem com es fa
   ?trigger <- (initial)
 	=>
 	(load "ProjectOntologyAprop.clp")
@@ -8,5 +7,4 @@
   (load "funcionsComprovacions.clp")
   (load "funcionsPuntuar.clp")
   (load "inputRules.clp")
-  (assert(initial-main))
 )
