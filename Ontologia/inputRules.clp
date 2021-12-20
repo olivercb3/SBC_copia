@@ -42,8 +42,19 @@
     (bind ?valorsPermesosFlexible (create$ "si" "no" "indiferent"))
 
     (bind ?pEdat (preguntaIntegerUnbound "Quina edat tens?"))
+
+    (if (<= ?pEdat 30)
+	then (printout t "Com que ets jove, intentarem que les vivendes que mostrem tinguin llocs d'oci a prop" crlf)
+	else if(>= ?pEdat 65) then (printout t "Com que ets gran, intentarem que les vivendes que mostrem tinguin ascensor o estiguin com a molt a la primera planta, i tinguin a prop supermercats i centres de salut" crlf)
+    )
+
     (bind ?pFills (preguntaIntegerUnbound "Quants fills tens o planeges tenir en un futur proper?"))
+
+    (if (> ?pFills 0) then (printout t "Com que tens fills o planeges tenir fills en el futur, intentarem que les vivendes que mostrem tinguin escoles a prop" crlf))
+
     (bind ?pGrans (preguntaIntegerUnbound "Quantes persones grans tens al teu carrec?"))
+
+    (if (> ?pGrans 0) then then (printout t "Com que tens persones grans al teu càrrec, intentarem que les vivendes que mostrem tinguin ascensor o estiguin com a molt a la primera planta, i tinguin a prop supermercats i centres de salut" crlf))
 
     ;Preguntar preu max
     (bind ?pFlexible (preguntaFlexible "Ets flexible amb el preu maxim?" ?valorsPermesosFlexible))   ;retorna 1 si es flexible, -1 si no es flexible, 0 si el preu li es indiferent
@@ -122,6 +133,8 @@
     (bind ?pGaratge (preguntaBinariaBis "Vols garatge?" ?valorsPermesosBinari))
 
     (bind ?pMascota (preguntaBinariaBis "Vols que el pis permeti mascotes?" ?valorsPermesosBinari))
+
+    (if (> ?pMascota 0) then (printout t "Com que assumim que tens mascotes, intentarem que les vivendes que mostrem tinguin zones verdes a prop"))
 
     (bind ?llistaPositivaForta (create$))
     (bind ?llistaPositivaDebil (create$))
